@@ -1,14 +1,16 @@
 package assemblyInterpreter;
 
+import java.util.ArrayList;
 
 public class BytecodeVocabolary {
 
-	public static final int INT=0,FLOAT=1,LABEL=2,STRING=3;
+	public static final int INT = 0, FLOAT = 1, LABEL = 2, STRING = 3;
 
 	// INSTRUCTION BYTECODES
 	public static final short
-			// System
-			HALT = 1, PRINT = 2,
+	// System
+			HALT = 1,
+			PRINT = 2,
 			// Managing Variables
 			// Local
 			LOAD = 3, STORE = 4,
@@ -30,15 +32,21 @@ public class BytecodeVocabolary {
 			BR = 23, BRT = 24, BRF = 25;
 
 	/** Used for assembly/disassembly; describes instruction set */
-	public static final Instruction[] instructions = new Instruction[] { null, // <INVALID>
-			new Instruction("halt"), new Instruction("print"), new Instruction("load",INT), new Instruction("store",INT),
-			new Instruction("gload",INT), new Instruction("gstore",INT), new Instruction("call"), new Instruction("ret"),
-			new Instruction("iadd"), new Instruction("isub"), new Instruction("halt"), new Instruction("halt"),
-			new Instruction("halt"),
-
-			new Instruction("iadd"), // index is the opcode TODO!più veloce con il mio mouse
+	public static final Instruction[] instructions = new Instruction[] {
+			null, // <INVALID>
+			new Instruction("halt"), new Instruction("print"),
+			new Instruction("load", INT), new Instruction("store", INT),
+			new Instruction("gload", INT), new Instruction("gstore", INT),
+			new Instruction("call"), new Instruction("ret"),
+			new Instruction("iadd"), new Instruction("isub"),
+			new Instruction("imul"), new Instruction("ilt"),
+			new Instruction("ieq"), new Instruction("fadd"),
+			new Instruction("fsub"), new Instruction("fmul"),
+			new Instruction("flt"), new Instruction("feq"),
+			new Instruction("itof"), new Instruction("iconst"),
+			new Instruction("sconst"), new Instruction("fconst"),
+			new Instruction("br"), new Instruction("brt") // index is the opcode
 	};
-	
 
 	public static int getInt(byte[] memory, int index) {
 		int b1 = memory[index++] & 0xFF; // mask off sign-extended bits
@@ -51,9 +59,15 @@ public class BytecodeVocabolary {
 
 	public static void writeInt(byte[] bytes, int index, int value) {
 		bytes[index + 0] = (byte) ((value >> (8 * 3)) & 0xFF); // get highest
-																// byte
 		bytes[index + 1] = (byte) ((value >> (8 * 2)) & 0xFF);
 		bytes[index + 2] = (byte) ((value >> (8 * 1)) & 0xFF);
 		bytes[index + 3] = (byte) (value & 0xFF);
+	}
+
+	public static void writeInt(ArrayList<Byte> code, int value) {
+		code.add(new Byte((byte) ((value >> (8 * 3)) & 0xFF))); // get highest
+		code.add(new Byte((byte) ((value >> (8 * 2)) & 0xFF)));
+		code.add(new Byte((byte) ((value >> (8 * 1)) & 0xFF)));
+		code.add(new Byte((byte) (value & 0xFF)));
 	}
 }

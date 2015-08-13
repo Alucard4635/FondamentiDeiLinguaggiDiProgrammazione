@@ -70,7 +70,7 @@ public class AssemblerGrammarLexer extends Lexer {
 	}
 
 
-	    // Define the functionality required by the parser for code generation
+	    // Define the functionality required by the parser for code generation TODO
 	    protected void gen(Token instrToken) {;}
 	    protected void gen(Token instrToken, Token operandToken) {;}
 	    protected void checkForUnresolvedReferences() {;}
@@ -123,7 +123,7 @@ public class AssemblerGrammarLexer extends Lexer {
 	private void STRING_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 1:
-			setText(_localctx.getChild(1).getText());//FIXME modified for get inner String 
+			setText(_localctx.getChild(0).getText());//FIXME modified for get inner String 
 			break;
 		}
 	}

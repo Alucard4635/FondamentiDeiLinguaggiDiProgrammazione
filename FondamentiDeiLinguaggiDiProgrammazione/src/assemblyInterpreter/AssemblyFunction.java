@@ -35,4 +35,19 @@ public class AssemblyFunction {
 	public void setDeclarationAddress(int declarationAddress) {
 		this.declarationAddress = declarationAddress;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AssemblyFunction){
+			AssemblyFunction f=(AssemblyFunction) obj;
+			return name.equals(f.name)
+					&& localVariablesNumber==f.localVariablesNumber
+					&& argumentNumber==f.argumentNumber
+					&& declarationAddress==f.declarationAddress;
+		}else if (obj instanceof String) {
+			String s=(String) obj;
+			return name.equals(s);
+		}
+		return super.equals(obj);
+	}
 }

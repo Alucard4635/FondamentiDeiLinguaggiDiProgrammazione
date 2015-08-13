@@ -1,5 +1,6 @@
 // Generated from AssemblerGrammar.g4 by ANTLR 4.4
 package assemblerAntlr;
+package assemblerAntlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -32,15 +33,6 @@ public class AssemblerGrammarLexer extends Lexer {
 		"T__6", "T__5", "T__4", "T__3", "T__2", "T__1", "T__0", "ID", "FUNC", 
 		"LETTER", "INT", "STRING", "STR_CHARS", "FLOAT", "WS", "NEWLINE"
 	};
-
-
-	    // Define the functionality required by the parser for code generation
-	    protected void gen(Token instrToken) {;}
-	    protected void gen(Token instrToken, Token operandToken) {;}
-	    protected void checkForUnresolvedReferences() {;}
-	    protected void defineFunction(Token idToken, int nargs, int nlocals) {;}
-	    protected void defineDataSize(int n) {;}
-	    protected void defineLabel(Token idToken) {;}
 
 
 	public AssemblerGrammarLexer(CharStream input) {
@@ -76,12 +68,12 @@ public class AssemblerGrammarLexer extends Lexer {
 	}
 	private void FUNC_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
-		case 0: setText(_localctx.getChild(0).getText()); break;
+		case 0: ; break;
 		}
 	}
 	private void STRING_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
-		case 1: setText(_localctx.getChild(1).getText()); break;
+		case 1: ; break;
 		}
 	}
 	private void WS_action(RuleContext _localctx, int actionIndex) {

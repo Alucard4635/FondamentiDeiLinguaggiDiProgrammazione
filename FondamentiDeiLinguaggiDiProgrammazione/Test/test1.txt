@@ -1,0 +1,3 @@
+sconst 1
+print
+halt

@@ -10,7 +10,7 @@ grammar AssemblerGrammar;
 
 @header {package assemblerAntlr;}
 // START: members
-@members {
+@parser::members {
     // Define the functionality required by the parser for code generation
     protected void gen(Token instrToken) {;}
     protected void gen(Token instrToken, Token operandToken) {;}
@@ -43,7 +43,7 @@ functionDeclaration
 // START: instr
 instr
     :   ID NEWLINE                         {gen($ID);}
-    |   ID operand NEWLINE                 {gen($ID,$operand.start);}
+    |   ID WS operand NEWLINE                 {gen($ID,$operand.start);}
     ;
 // END: instr
 
@@ -62,7 +62,7 @@ label
 
 ID  :   LETTER (LETTER | '0'..'9')* ;
 
-FUNC:   ID '()' {setText(_localctx.getChild(0).getText());} ;
+FUNC:   ID '()' {;} ;
 
 fragment
 LETTER
@@ -72,7 +72,7 @@ LETTER
 INT :   '-'? '0'..'9'+ ;
 
 
-STRING: '\"' STR_CHARS '\"' {setText(_localctx.getChild(1).getText());} ;
+STRING: '\"' STR_CHARS '\"' {;} ;
 
 fragment STR_CHARS : ~'"'* ;
 
