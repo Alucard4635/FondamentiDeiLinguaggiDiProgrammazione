@@ -8,6 +8,7 @@
  */
 grammar AssemblerGrammar;
 
+@header {package assemblerAntlr;}
 // START: members
 @members {
     // Define the functionality required by the parser for code generation
@@ -61,7 +62,7 @@ label
 
 ID  :   LETTER (LETTER | '0'..'9')* ;
 
-FUNC:   ID '()' {setText(ID.text);} ;
+FUNC:   ID '()' {setText(_localctx.getChild(0).getText());} ;
 
 fragment
 LETTER
@@ -71,15 +72,15 @@ LETTER
 INT :   '-'? '0'..'9'+ ;
 
 
-STRING: '\"' STR_CHARS '\"' {setText(STR_CHARS.text);} ;
+STRING: '\"' STR_CHARS '\"' {setText(_localctx.getChild(1).getText());} ;
 
 fragment STR_CHARS : ~'"'* ;
 
 FLOAT
     :   INT '.' INT*
     |   '.' INT+
-    |   INT '.' INT*
-    |   '.' INT+
+    |   INT ',' INT*
+    |   ',' INT+
     ;
 
 WS  :   (' '|'\t')+ {skip();} ;

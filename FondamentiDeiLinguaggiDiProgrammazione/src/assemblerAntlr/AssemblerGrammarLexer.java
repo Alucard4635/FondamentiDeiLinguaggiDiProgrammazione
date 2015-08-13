@@ -116,14 +116,14 @@ public class AssemblerGrammarLexer extends Lexer {
 	private void FUNC_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			setText(ID.text);
+			setText(_localctx.getChild(0).getText());//FIXME modified for get function ID
 			break;
 		}
 	}
 	private void STRING_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 1:
-			setText(STR_CHARS.text);
+			setText(_localctx.getChild(1).getText());//FIXME modified for get inner String 
 			break;
 		}
 	}
