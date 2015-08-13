@@ -12,8 +12,6 @@ import assemblerAntlr.AssemblerParser;
 import assemblyInterpreter.AssemblyFunction;
 import assemblyInterpreter.BytecodeVocabolary;
 import assemblyInterpreter.Instruction;
-import zAssemblerParr.FunctionSymbol;
-import zAssemblerParr.LabelSymbol;
 
 public class BytecodeGenerator extends AssemblerParser {
 	public BytecodeGenerator(TokenStream input) {
@@ -63,14 +61,12 @@ public class BytecodeGenerator extends AssemblerParser {
         int v = 0;
         switch ( operandToken.getType() ) { // switch on token type
             case INT :   v = Integer.valueOf(text); break;
-            case CHAR :  v = Character.valueOf(text.charAt(1)); break;
             case FLOAT : v = getConstantPoolIndex(Float.valueOf(text)); break;
             case STRING: v = getConstantPoolIndex(text); break;
             case ID :    v = getLabelAddress(text); break;
             case FUNC :  v = getFunctionIndex(text); break;
         }
-        ensureCapacity(ip+4);  // expand code array if necessary
-        writeInt(code, ip, v); // write operand to code byte array
+        BytecodeVocabolary.writeInt(code, ip, v); // write operand to code byte array
         ip += 4;               // we've written four bytes
     }
     protected int getConstantPoolIndex(Object o) {
