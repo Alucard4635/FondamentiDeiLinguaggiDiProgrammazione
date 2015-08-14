@@ -1,6 +1,5 @@
 // Generated from AssemblerGrammar.g4 by ANTLR 4.4
 package assemblerAntlr;
-package assemblerAntlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

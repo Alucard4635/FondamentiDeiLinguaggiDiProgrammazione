@@ -1,5 +1,5 @@
-// Generated from AssemblerGrammar.g4 by ANTLR 4.4
-package assemblerAntlr;
+// Generated from AssemblerGrammar.g4 by ANTLR 4.5.1
+package assemblerGrammar;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -11,18 +11,14 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class AssemblerGrammarParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__6=1, T__5=2, T__4=3, T__3=4, T__2=5, T__1=6, T__0=7, ID=8, FUNC=9, 
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, ID=8, FUNC=9, 
 		INT=10, STRING=11, FLOAT=12, WS=13, NEWLINE=14;
-	public static final String[] tokenNames = {
-		"<INVALID>", "'.def'", "'.globals'", "'args'", "':'", "','", "'locals'", 
-		"'='", "ID", "FUNC", "INT", "STRING", "FLOAT", "WS", "NEWLINE"
-	};
 	public static final int
 		RULE_program = 0, RULE_globals = 1, RULE_functionDeclaration = 2, RULE_instr = 3, 
 		RULE_operand = 4, RULE_label = 5;
@@ -30,11 +26,48 @@ public class AssemblerGrammarParser extends Parser {
 		"program", "globals", "functionDeclaration", "instr", "operand", "label"
 	};
 
-	@Override
-	public String getGrammarFileName() { return "AssemblerGrammar.g4"; }
+	private static final String[] _LITERAL_NAMES = {
+		null, "'.globals'", "'.def'", "':'", "'args'", "'='", "','", "'locals'"
+	};
+	private static final String[] _SYMBOLIC_NAMES = {
+		null, null, null, null, null, null, null, null, "ID", "FUNC", "INT", "STRING", 
+		"FLOAT", "WS", "NEWLINE"
+	};
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
+		for (int i = 0; i < tokenNames.length; i++) {
+			tokenNames[i] = VOCABULARY.getLiteralName(i);
+			if (tokenNames[i] == null) {
+				tokenNames[i] = VOCABULARY.getSymbolicName(i);
+			}
+
+			if (tokenNames[i] == null) {
+				tokenNames[i] = "<INVALID>";
+			}
+		}
+	}
 
 	@Override
-	public String[] getTokenNames() { return tokenNames; }
+	@Deprecated
+	public String[] getTokenNames() {
+		return tokenNames;
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+		return VOCABULARY;
+	}
+
+	@Override
+	public String getGrammarFileName() { return "AssemblerGrammar.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -59,8 +92,8 @@ public class AssemblerGrammarParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgramContext extends ParserRuleContext {
-		public LabelContext label(int i) {
-			return getRuleContext(LabelContext.class,i);
+		public GlobalsContext globals() {
+			return getRuleContext(GlobalsContext.class,0);
 		}
 		public List<FunctionDeclarationContext> functionDeclaration() {
 			return getRuleContexts(FunctionDeclarationContext.class);
@@ -68,21 +101,21 @@ public class AssemblerGrammarParser extends Parser {
 		public FunctionDeclarationContext functionDeclaration(int i) {
 			return getRuleContext(FunctionDeclarationContext.class,i);
 		}
+		public List<InstrContext> instr() {
+			return getRuleContexts(InstrContext.class);
+		}
 		public InstrContext instr(int i) {
 			return getRuleContext(InstrContext.class,i);
 		}
 		public List<LabelContext> label() {
 			return getRuleContexts(LabelContext.class);
 		}
+		public LabelContext label(int i) {
+			return getRuleContext(LabelContext.class,i);
+		}
 		public List<TerminalNode> NEWLINE() { return getTokens(AssemblerGrammarParser.NEWLINE); }
 		public TerminalNode NEWLINE(int i) {
 			return getToken(AssemblerGrammarParser.NEWLINE, i);
-		}
-		public GlobalsContext globals() {
-			return getRuleContext(GlobalsContext.class,0);
-		}
-		public List<InstrContext> instr() {
-			return getRuleContexts(InstrContext.class);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -109,7 +142,8 @@ public class AssemblerGrammarParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				{
-				setState(12); globals();
+				setState(12);
+				globals();
 				}
 				break;
 			}
@@ -122,22 +156,26 @@ public class AssemblerGrammarParser extends Parser {
 				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 				case 1:
 					{
-					setState(15); functionDeclaration();
+					setState(15);
+					functionDeclaration();
 					}
 					break;
 				case 2:
 					{
-					setState(16); instr();
+					setState(16);
+					instr();
 					}
 					break;
 				case 3:
 					{
-					setState(17); label();
+					setState(17);
+					label();
 					}
 					break;
 				case 4:
 					{
-					setState(18); match(NEWLINE);
+					setState(18);
+					match(NEWLINE);
 					}
 					break;
 				}
@@ -145,7 +183,7 @@ public class AssemblerGrammarParser extends Parser {
 				setState(21); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << ID) | (1L << NEWLINE))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << ID) | (1L << NEWLINE))) != 0) );
 			checkForUnresolvedReferences();
 			}
 		}
@@ -162,11 +200,11 @@ public class AssemblerGrammarParser extends Parser {
 
 	public static class GlobalsContext extends ParserRuleContext {
 		public Token INT;
+		public TerminalNode INT() { return getToken(AssemblerGrammarParser.INT, 0); }
 		public List<TerminalNode> NEWLINE() { return getTokens(AssemblerGrammarParser.NEWLINE); }
 		public TerminalNode NEWLINE(int i) {
 			return getToken(AssemblerGrammarParser.NEWLINE, i);
 		}
-		public TerminalNode INT() { return getToken(AssemblerGrammarParser.INT, 0); }
 		public GlobalsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -194,16 +232,20 @@ public class AssemblerGrammarParser extends Parser {
 			while (_la==NEWLINE) {
 				{
 				{
-				setState(25); match(NEWLINE);
+				setState(25);
+				match(NEWLINE);
 				}
 				}
 				setState(30);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(31); match(T__5);
-			setState(32); ((GlobalsContext)_localctx).INT = match(INT);
-			setState(33); match(NEWLINE);
+			setState(31);
+			match(T__0);
+			setState(32);
+			((GlobalsContext)_localctx).INT = match(INT);
+			setState(33);
+			match(NEWLINE);
 			defineDataSize((((GlobalsContext)_localctx).INT!=null?Integer.valueOf(((GlobalsContext)_localctx).INT.getText()):0));
 			}
 		}
@@ -222,12 +264,12 @@ public class AssemblerGrammarParser extends Parser {
 		public Token name;
 		public Token a;
 		public Token n;
+		public TerminalNode NEWLINE() { return getToken(AssemblerGrammarParser.NEWLINE, 0); }
+		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
+		public List<TerminalNode> INT() { return getTokens(AssemblerGrammarParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(AssemblerGrammarParser.INT, i);
 		}
-		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public TerminalNode NEWLINE() { return getToken(AssemblerGrammarParser.NEWLINE, 0); }
-		public List<TerminalNode> INT() { return getTokens(AssemblerGrammarParser.INT); }
 		public FunctionDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -248,17 +290,28 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(36); match(T__6);
-			setState(37); ((FunctionDeclarationContext)_localctx).name = match(ID);
-			setState(38); match(T__3);
-			setState(39); match(T__4);
-			setState(40); match(T__0);
-			setState(41); ((FunctionDeclarationContext)_localctx).a = match(INT);
-			setState(42); match(T__2);
-			setState(43); match(T__1);
-			setState(44); match(T__0);
-			setState(45); ((FunctionDeclarationContext)_localctx).n = match(INT);
-			setState(46); match(NEWLINE);
+			setState(36);
+			match(T__1);
+			setState(37);
+			((FunctionDeclarationContext)_localctx).name = match(ID);
+			setState(38);
+			match(T__2);
+			setState(39);
+			match(T__3);
+			setState(40);
+			match(T__4);
+			setState(41);
+			((FunctionDeclarationContext)_localctx).a = match(INT);
+			setState(42);
+			match(T__5);
+			setState(43);
+			match(T__6);
+			setState(44);
+			match(T__4);
+			setState(45);
+			((FunctionDeclarationContext)_localctx).n = match(INT);
+			setState(46);
+			match(NEWLINE);
 			defineFunction(((FunctionDeclarationContext)_localctx).name, (((FunctionDeclarationContext)_localctx).a!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).a.getText()):0), (((FunctionDeclarationContext)_localctx).n!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).n.getText()):0));
 			}
 		}
@@ -277,8 +330,8 @@ public class AssemblerGrammarParser extends Parser {
 		public Token ID;
 		public OperandContext operand;
 		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public TerminalNode WS() { return getToken(AssemblerGrammarParser.WS, 0); }
 		public TerminalNode NEWLINE() { return getToken(AssemblerGrammarParser.NEWLINE, 0); }
+		public TerminalNode WS() { return getToken(AssemblerGrammarParser.WS, 0); }
 		public OperandContext operand() {
 			return getRuleContext(OperandContext.class,0);
 		}
@@ -305,18 +358,24 @@ public class AssemblerGrammarParser extends Parser {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(49); ((InstrContext)_localctx).ID = match(ID);
-				setState(50); match(NEWLINE);
+				setState(49);
+				((InstrContext)_localctx).ID = match(ID);
+				setState(50);
+				match(NEWLINE);
 				gen(((InstrContext)_localctx).ID);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(52); ((InstrContext)_localctx).ID = match(ID);
-				setState(53); match(WS);
-				setState(54); ((InstrContext)_localctx).operand = operand();
-				setState(55); match(NEWLINE);
+				setState(52);
+				((InstrContext)_localctx).ID = match(ID);
+				setState(53);
+				match(WS);
+				setState(54);
+				((InstrContext)_localctx).operand = operand();
+				setState(55);
+				match(NEWLINE);
 				gen(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));
 				}
 				break;
@@ -335,9 +394,9 @@ public class AssemblerGrammarParser extends Parser {
 
 	public static class OperandContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public TerminalNode STRING() { return getToken(AssemblerGrammarParser.STRING, 0); }
 		public TerminalNode FUNC() { return getToken(AssemblerGrammarParser.FUNC, 0); }
 		public TerminalNode INT() { return getToken(AssemblerGrammarParser.INT, 0); }
+		public TerminalNode STRING() { return getToken(AssemblerGrammarParser.STRING, 0); }
 		public TerminalNode FLOAT() { return getToken(AssemblerGrammarParser.FLOAT, 0); }
 		public OperandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -364,8 +423,9 @@ public class AssemblerGrammarParser extends Parser {
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << FUNC) | (1L << INT) | (1L << STRING) | (1L << FLOAT))) != 0)) ) {
 			_errHandler.recoverInline(this);
+			} else {
+				consume();
 			}
-			consume();
 			}
 		}
 		catch (RecognitionException re) {
@@ -402,8 +462,10 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62); ((LabelContext)_localctx).ID = match(ID);
-			setState(63); match(T__3);
+			setState(62);
+			((LabelContext)_localctx).ID = match(ID);
+			setState(63);
+			match(T__2);
 			defineLabel(((LabelContext)_localctx).ID);
 			}
 		}
@@ -430,12 +492,12 @@ public class AssemblerGrammarParser extends Parser {
 		"\21\3\2\2\2\25\22\3\2\2\2\25\23\3\2\2\2\25\24\3\2\2\2\26\27\3\2\2\2\27"+
 		"\25\3\2\2\2\27\30\3\2\2\2\30\31\3\2\2\2\31\32\b\2\1\2\32\3\3\2\2\2\33"+
 		"\35\7\20\2\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37"+
-		"!\3\2\2\2 \36\3\2\2\2!\"\7\4\2\2\"#\7\f\2\2#$\7\20\2\2$%\b\3\1\2%\5\3"+
-		"\2\2\2&\'\7\3\2\2\'(\7\n\2\2()\7\6\2\2)*\7\5\2\2*+\7\t\2\2+,\7\f\2\2,"+
-		"-\7\7\2\2-.\7\b\2\2./\7\t\2\2/\60\7\f\2\2\60\61\7\20\2\2\61\62\b\4\1\2"+
+		"!\3\2\2\2 \36\3\2\2\2!\"\7\3\2\2\"#\7\f\2\2#$\7\20\2\2$%\b\3\1\2%\5\3"+
+		"\2\2\2&\'\7\4\2\2\'(\7\n\2\2()\7\5\2\2)*\7\6\2\2*+\7\7\2\2+,\7\f\2\2,"+
+		"-\7\b\2\2-.\7\t\2\2./\7\7\2\2/\60\7\f\2\2\60\61\7\20\2\2\61\62\b\4\1\2"+
 		"\62\7\3\2\2\2\63\64\7\n\2\2\64\65\7\20\2\2\65=\b\5\1\2\66\67\7\n\2\2\67"+
 		"8\7\17\2\289\5\n\6\29:\7\20\2\2:;\b\5\1\2;=\3\2\2\2<\63\3\2\2\2<\66\3"+
-		"\2\2\2=\t\3\2\2\2>?\t\2\2\2?\13\3\2\2\2@A\7\n\2\2AB\7\6\2\2BC\b\7\1\2"+
+		"\2\2\2=\t\3\2\2\2>?\t\2\2\2?\13\3\2\2\2@A\7\n\2\2AB\7\5\2\2BC\b\7\1\2"+
 		"C\r\3\2\2\2\7\17\25\27\36<";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

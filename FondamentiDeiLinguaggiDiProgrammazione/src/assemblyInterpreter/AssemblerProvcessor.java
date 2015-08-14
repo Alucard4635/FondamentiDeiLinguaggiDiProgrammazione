@@ -11,8 +11,8 @@ import javax.swing.JFileChooser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import assemblerAntlr.AssemblerGrammarLexer;
 import assemblerCompirer.BytecodeGenerator;
+import assemblerGrammar.AssemblerGrammarLexer;
 
 public class AssemblerProvcessor {
 

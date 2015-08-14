@@ -8,7 +8,7 @@
  */
 grammar AssemblerGrammar;
 
-@header {package assemblerAntlr;}
+@header {package assemblerGrammar;}
 // START: members
 @parser::members {
     // Define the functionality required by the parser for code generation

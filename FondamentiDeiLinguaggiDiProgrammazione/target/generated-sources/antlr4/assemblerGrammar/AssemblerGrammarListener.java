@@ -1,5 +1,5 @@
 // Generated from AssemblerGrammar.g4 by ANTLR 4.4
-package assemblerAntlr;
+package assemblerGrammar;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.antlr.runtime.Token;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
 
-import assemblerAntlr.AssemblerGrammarParser;
+import assemblerGrammar.AssemblerGrammarParser;
 import assemblyInterpreter.AssemblyFunction;
 import assemblyInterpreter.BytecodeVocabolary;
 import assemblyInterpreter.Instruction;
@@ -62,7 +62,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	public int getDataSize() {
 		return dataSize;
 	}
-
+	
 	protected void gen(Token instrToken) {
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
@@ -80,9 +80,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		gen(instrToken);
 		genOperand(operandToken);
 	}
-
-	protected void genOperand(Token operandToken) {// TODO devo mettere un byte
-													// alla volta
+	protected void genOperand(Token operandToken) {
 		String text = operandToken.getText();
 		int v = 0;
 		switch (operandToken.getType()) { // switch on token type
@@ -103,20 +101,16 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			break;
 		}
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
-												// array
 	}
 
-	protected int getConstantPoolIndex(Object o) {
-		if (constPool.contains(o))
-			return constPool.indexOf(o);
-		constPool.add(o);
-		return constPool.size() - 1;
+	protected void checkForUnresolvedReferences() {
+		for (String name : labels.keySet()) {
+			LabelSymbol sym = (LabelSymbol) labels.get(name);
+			if ( !sym.isDefined() ) {
+				System.err.println("unresolved reference: "+name);
+			}
+		}
 	}
-
-	public Object[] getConstantPool() {
-		return constPool.toArray();
-	}
-
 	protected void defineFunction(Token idToken, int args, int locals) {
 		String name = idToken.getText();
 		AssemblyFunction f = new AssemblyFunction(name, args, locals,
@@ -131,6 +125,16 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			getConstantPoolIndex(f); // save into constant pool
 	}
 
+	protected int getConstantPoolIndex(Object o) {
+		if (constPool.contains(o))
+			return constPool.indexOf(o);
+		constPool.add(o);
+		return constPool.size() - 1;
+	}
+	
+	public Object[] getConstantPool() {
+		return constPool.toArray();
+	}
 	protected int getFunctionIndex(String id) {// TODO remove object creation
 		int i = constPool.indexOf(id);
 		if (i >= 0)
@@ -158,15 +162,6 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		}
 		return 0; // we don't know the real address yet
 	}
-
-    protected void checkForUnresolvedReferences() {
-        for (String name : labels.keySet()) {
-            LabelSymbol sym = (LabelSymbol) labels.get(name);
-            if ( !sym.isDefined() ) {
-                System.err.println("unresolved reference: "+name);
-            }
-        }
-    }
 
 	public AssemblyFunction getMainFunction() {
 		return mainFunction;
