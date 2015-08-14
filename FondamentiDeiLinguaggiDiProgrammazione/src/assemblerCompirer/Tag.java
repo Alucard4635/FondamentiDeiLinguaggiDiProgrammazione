@@ -1,12 +1,12 @@
 package assemblerCompirer;
 
-public class LabelSymbol {
+public class Tag {
 	public final String name;
 	public final int whereIs;
 	private boolean isDefined=false;
 	private int forwardReferedAddress=-1;
 
-	public LabelSymbol(String id, int ip) {
+	public Tag(String id, int ip) {
 		this.name = id;
 		whereIs=ip;
 	}

@@ -125,7 +125,7 @@ public class AssemblerProvcessor {
 		calls[++fp] = f; // push new stack frame for parameters and locals
 		// move args from operand stack to top frame on call stack
 		for (int a = fs.getArgumentNumber() - 1; a >= 0; a--) {
-			f.getLocalsVariables()[a] = operands[sp--];
+			f.getLocalsVariables()[a] = popOperand();
 		}
 		ip = fs.getDeclarationAddress(); // branch to function
 	}
@@ -141,116 +141,106 @@ public class AssemblerProvcessor {
 			ip++; // jump to next instruction or first byte of operand
 			switch (opcode) {
 			case BytecodeVocabolary.IADD:
-				opI1 = (Integer) operands[sp - 1]; // 1st opnd 1 below top
-				opI2 = (Integer) operands[sp]; // 2nd opnd at top of stack
-				sp -= 2; // pop both operands
-				operands[++sp] = opI1 + opI2; // push result
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 + opI2; 
 				break;
 			case BytecodeVocabolary.ISUB:
-				opI1 = (Integer) operands[sp - 1];
-				opI2 = (Integer) operands[sp];
-				sp -= 2;
-				operands[++sp] = opI1 - opI2;
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 - opI2;
 				break;
 			case BytecodeVocabolary.IMUL:
-				opI1 = (Integer) operands[sp - 1];
-				opI2 = (Integer) operands[sp];
-				sp -= 2;
-				operands[++sp] = opI1 * opI2;
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 * opI2;
 				break;
 			case BytecodeVocabolary.ILT:
-				opI1 = (Integer) operands[sp - 1];
-				opI2 = (Integer) operands[sp];
-				sp -= 2;
-				operands[++sp] = opI1 < opI2;
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 < opI2;
 				break;
 			case BytecodeVocabolary.IEQ:
-				opI1 = (Integer) operands[sp - 1];
-				opI2 = (Integer) operands[sp];
-				sp -= 2;
-				operands[++sp] = opI1 == opI2;
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 == opI2;
 				break;
 			case BytecodeVocabolary.FADD:
-				opF1 = (Float) operands[sp - 1];
-				opF2 = (Float) operands[sp];
-				sp -= 2;
-				operands[++sp] = opF1 + opF2;
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 + opF2;
 				break;
 			case BytecodeVocabolary.FSUB:
-				opF1 = (Float) operands[sp - 1];
-				opF2 = (Float) operands[sp];
-				sp -= 2;
-				operands[++sp] = opF1 - opF2;
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 - opF2;
 				break;
 			case BytecodeVocabolary.FMUL:
-				opF1 = (Float) operands[sp - 1];
-				opF2 = (Float) operands[sp];
-				sp -= 2;
-				operands[++sp] = opF1 * opF2;
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 * opF2;
 				break;
 			case BytecodeVocabolary.FLT:
-				opF1 = (Float) operands[sp - 1];
-				opF2 = (Float) operands[sp];
-				sp -= 2;
-				operands[++sp] = opF1 < opF2;
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 < opF2;
 				break;
 			case BytecodeVocabolary.FEQ:
-				opF1 = (Float) operands[sp - 1];
-				opF2 = (Float) operands[sp];
-				sp -= 2;
-				operands[++sp] = opF1 == opF2;
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 == opF2;
 				break;
 			case BytecodeVocabolary.ITOF:
-				opI1 = (Integer) operands[sp--];
+				opI1 = (Integer) popOperand();
 				operands[++sp] = (float) opI1;
 				break;
 			case BytecodeVocabolary.CALL:
 				int funcIndexInConstPool = getIntOperand();
 				call(funcIndexInConstPool);
 				break;
-			case BytecodeVocabolary.RET: // result is on op stack
-				FunctionRecord fr = calls[fp--]; // pop stack frame
-				ip = fr.getReturnAddress(); // branch to ret addr
+			case BytecodeVocabolary.RET: 
+				FunctionRecord fr = calls[fp--]; 
+				ip = fr.getReturnAddress(); 
 				break;
 			case BytecodeVocabolary.BR:
 				ip = getIntOperand();
 				break;
 			case BytecodeVocabolary.BRT:
 				addressArgoment = getIntOperand();
-				if (operands[sp--].equals(true))
+				if (popOperand().equals(true))
 					ip = addressArgoment;
 				break;
 			case BytecodeVocabolary.BRF:
 				addressArgoment = getIntOperand();
-				if (operands[sp--].equals(false))
+				if (popOperand().equals(false))
 					ip = addressArgoment;
 				break;
 			case BytecodeVocabolary.ICONST:
-				operands[++sp] = getIntOperand(); // push operand
+				pushOperand(getIntOperand()); // push operand
 				break;
 			case BytecodeVocabolary.FCONST:
 			case BytecodeVocabolary.SCONST:
 				int constPoolIndex = getIntOperand();
-				operands[++sp] = constPool[constPoolIndex];
+				pushOperand(constPool[constPoolIndex]);
 				break;
 			case BytecodeVocabolary.LOAD: // load from call stack
 				addressArgoment = getIntOperand();
-				operands[++sp] = calls[fp].getLocalsVariables()[addressArgoment];
+				pushOperand(calls[fp].getLocalsVariables()[addressArgoment]);
 				break;
 			case BytecodeVocabolary.GLOAD:// load from global memory
 				addressArgoment = getIntOperand();
-				operands[++sp] = globals[addressArgoment];
+				pushOperand(globals[addressArgoment]);
 				break;
 			case BytecodeVocabolary.STORE:
 				addressArgoment = getIntOperand();
-				calls[fp].getLocalsVariables()[addressArgoment] = operands[sp--];
+				calls[fp].getLocalsVariables()[addressArgoment] = popOperand();
 				break;
 			case BytecodeVocabolary.GSTORE:
 				addressArgoment = getIntOperand();
-				globals[addressArgoment] = operands[sp--];
+				globals[addressArgoment] = popOperand();
 				break;
 			case BytecodeVocabolary.PRINT:
-				System.out.println(operands[sp--]);
+				System.out.println(popOperand());
 				break;
 			default:
 				throw new Error("invalid opcode: " + opcode + " at ip="
@@ -259,5 +249,17 @@ public class AssemblerProvcessor {
 			opcode = code[ip];
 		}
 
+	}
+
+	private void pushOperand(Object op) {
+		operands[++sp] = op;
+	}
+
+	private Object topOperand() {
+		return operands[sp];
+	}
+
+	private Object popOperand() {
+		return operands[sp--];
 	}
 }

@@ -17,16 +17,15 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 
 	private static final int INITIAL_CODE_SIZE = 2048;
 	protected Map<String, Integer> instructionOpcodeMapping = new HashMap<String, Integer>();
-	protected Map<String, LabelSymbol> labels = new HashMap<String, LabelSymbol>();// label
+	protected Map<String, Tag> labels = new HashMap<String, Tag>();// label
 																					// scope
 	/**
 	 * All float and string literals have unique int index in constant pool. We
 	 * put AssemblyFunction in here too.
 	 */
-	private List<Object> constPool = new ArrayList<Object>();
-	// protected int ip = 0; // Instruction pointer; used to fill code[]
+	private ArrayList<Object> constPool = new ArrayList<Object>();
 	private ArrayList<Byte> code = new ArrayList<Byte>(INITIAL_CODE_SIZE); // code
-																				// memory
+																			// memory
 	private int dataSize; // set via .globals
 	private AssemblyFunction mainFunction;
 
@@ -62,24 +61,27 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	public int getDataSize() {
 		return dataSize;
 	}
-	
-	protected void gen(Token instrToken) {
+
+	protected void defineDataSize(int n) {
+		dataSize = n;
+	}
+
+
+	protected void gen(Token instrToken) throws AssemblerException {
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
 		if (opcodeI == null) {
-			System.err.println("line " + instrToken.getLine()
-					+ ": Unknown instruction: " + instrName);
-			return;
+			throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNKNOWN_INSTRUCTION,instrToken.getLine(),instrName);
 		}
-		int opcode = opcodeI.intValue();
-		code.add((byte) (opcode & 0xFF));
+		code.add((byte) opcodeI.byteValue());
 	}
 
 	/** Generate code for an instruction with one operand */
-	protected void gen(Token instrToken, Token operandToken) {
+	protected void gen(Token instrToken, Token operandToken)throws AssemblerException {
 		gen(instrToken);
 		genOperand(operandToken);
 	}
+
 	protected void genOperand(Token operandToken) {
 		String text = operandToken.getText();
 		int v = 0;
@@ -103,22 +105,21 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
 	}
 
-	protected void checkForUnresolvedReferences() {
+	protected void checkForUnresolvedReferences() throws AssemblerException {
 		for (String name : labels.keySet()) {
-			LabelSymbol sym = (LabelSymbol) labels.get(name);
-			if ( !sym.isDefined() ) {
-				System.err.println("unresolved reference: "+name);
+			Tag sym = (Tag) labels.get(name);
+			if (!sym.isDefined()) {
+				throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNDEFINED,sym.whereIs,sym.name);
 			}
 		}
 	}
+
 	protected void defineFunction(Token idToken, int args, int locals) {
 		String name = idToken.getText();
 		AssemblyFunction f = new AssemblyFunction(name, args, locals,
 				code.size());
 		if (name.equals("main"))
 			setMainFunction(f);
-		// Did someone referred to this function before it was defined?
-		// if so, replace element in constant pool (at same index)
 		if (constPool.contains(f))
 			constPool.set(constPool.indexOf(f), f);
 		else
@@ -131,32 +132,28 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		constPool.add(o);
 		return constPool.size() - 1;
 	}
-	
+
 	public Object[] getConstantPool() {
 		return constPool.toArray();
 	}
-	protected int getFunctionIndex(String id) {// TODO remove object creation
+
+	protected int getFunctionIndex(String id) {
 		int i = constPool.indexOf(id);
-		if (i >= 0)
-			return i; // already in system; return index.
-		// must be a forward function reference
-		// create the constant pool entry; we'll fill in later
+		if (i >= 0){
+			return i;
+		}
 		return getConstantPoolIndex(id);
 	}
 
-	protected int getLabelAddress(String id) {// TODO look forward reference
-		LabelSymbol sym = (LabelSymbol) labels.get(id);
+	protected int getLabelAddress(String id) {
+		Tag sym = (Tag) labels.get(id);
 		if (sym == null) {
-			// assume it's a forward code reference; record opnd address
-			sym = new LabelSymbol(id, code.size());
+			sym = new Tag(id, code.size());
 			labels.put(id, sym); // add to symbol table
 		} else {
 			if (sym.isForwardRefered()) {
-				// address is unknown, must simply add to forward ref list
-				// record where in code memory we should patch later
 				sym.addForwardReference(code.size());
 			} else {
-				// all is well; it's defined--just grab address
 				return sym.whereIs;
 			}
 		}

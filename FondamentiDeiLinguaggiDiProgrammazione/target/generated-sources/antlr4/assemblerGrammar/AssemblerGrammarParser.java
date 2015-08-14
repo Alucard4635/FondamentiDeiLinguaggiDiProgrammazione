@@ -1,5 +1,8 @@
 // Generated from AssemblerGrammar.g4 by ANTLR 4.4
 package assemblerGrammar;
+package assemblerGrammar;
+	import assemblerCompirer.AssemblerException;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -47,12 +50,12 @@ public class AssemblerGrammarParser extends Parser {
 
 
 	    // Define the functionality required by the parser for code generation
-	    protected void gen(Token instrToken) {;}
-	    protected void gen(Token instrToken, Token operandToken) {;}
-	    protected void checkForUnresolvedReferences() {;}
-	    protected void defineFunction(Token idToken, int nargs, int nlocals) {;}
-	    protected void defineDataSize(int n) {;}
-	    protected void defineLabel(Token idToken) {;}
+	    protected void gen(Token instrToken)throws AssemblerException {;}
+	    protected void gen(Token instrToken, Token operandToken)throws AssemblerException {;}
+	    protected void checkForUnresolvedReferences()throws AssemblerException {;}
+	    protected void defineFunction(Token idToken, int nargs, int nlocals)throws AssemblerException {;}
+	    protected void defineDataSize(int n)throws AssemblerException {;}
+	    protected void getLabelAddress(Token idToken)throws AssemblerException {;}
 
 	public AssemblerGrammarParser(TokenStream input) {
 		super(input);
@@ -277,7 +280,6 @@ public class AssemblerGrammarParser extends Parser {
 		public Token ID;
 		public OperandContext operand;
 		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public TerminalNode WS() { return getToken(AssemblerGrammarParser.WS, 0); }
 		public TerminalNode NEWLINE() { return getToken(AssemblerGrammarParser.NEWLINE, 0); }
 		public OperandContext operand() {
 			return getRuleContext(OperandContext.class,0);
@@ -300,7 +302,7 @@ public class AssemblerGrammarParser extends Parser {
 		InstrContext _localctx = new InstrContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_instr);
 		try {
-			setState(58);
+			setState(57);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -314,9 +316,8 @@ public class AssemblerGrammarParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(52); ((InstrContext)_localctx).ID = match(ID);
-				setState(53); match(WS);
-				setState(54); ((InstrContext)_localctx).operand = operand();
-				setState(55); match(NEWLINE);
+				setState(53); ((InstrContext)_localctx).operand = operand();
+				setState(54); match(NEWLINE);
 				gen(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));
 				}
 				break;
@@ -360,7 +361,7 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(60);
+			setState(59);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << FUNC) | (1L << INT) | (1L << STRING) | (1L << FLOAT))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -402,8 +403,8 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62); ((LabelContext)_localctx).ID = match(ID);
-			setState(63); match(T__3);
+			setState(61); ((LabelContext)_localctx).ID = match(ID);
+			setState(62); match(T__3);
 			defineLabel(((LabelContext)_localctx).ID);
 			}
 		}
@@ -419,24 +420,24 @@ public class AssemblerGrammarParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20E\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20D\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\5\2\20\n\2\3\2\3\2\3\2\3\2\6\2"+
 		"\26\n\2\r\2\16\2\27\3\2\3\2\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5=\n\5\3\6\3\6\3\7\3\7\3\7\3\7\3\7\2\2\b"+
-		"\2\4\6\b\n\f\2\3\3\2\n\16E\2\17\3\2\2\2\4\36\3\2\2\2\6&\3\2\2\2\b<\3\2"+
-		"\2\2\n>\3\2\2\2\f@\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\17\20\3\2\2\2\20"+
-		"\25\3\2\2\2\21\26\5\6\4\2\22\26\5\b\5\2\23\26\5\f\7\2\24\26\7\20\2\2\25"+
-		"\21\3\2\2\2\25\22\3\2\2\2\25\23\3\2\2\2\25\24\3\2\2\2\26\27\3\2\2\2\27"+
-		"\25\3\2\2\2\27\30\3\2\2\2\30\31\3\2\2\2\31\32\b\2\1\2\32\3\3\2\2\2\33"+
-		"\35\7\20\2\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37"+
-		"!\3\2\2\2 \36\3\2\2\2!\"\7\4\2\2\"#\7\f\2\2#$\7\20\2\2$%\b\3\1\2%\5\3"+
-		"\2\2\2&\'\7\3\2\2\'(\7\n\2\2()\7\6\2\2)*\7\5\2\2*+\7\t\2\2+,\7\f\2\2,"+
-		"-\7\7\2\2-.\7\b\2\2./\7\t\2\2/\60\7\f\2\2\60\61\7\20\2\2\61\62\b\4\1\2"+
-		"\62\7\3\2\2\2\63\64\7\n\2\2\64\65\7\20\2\2\65=\b\5\1\2\66\67\7\n\2\2\67"+
-		"8\7\17\2\289\5\n\6\29:\7\20\2\2:;\b\5\1\2;=\3\2\2\2<\63\3\2\2\2<\66\3"+
-		"\2\2\2=\t\3\2\2\2>?\t\2\2\2?\13\3\2\2\2@A\7\n\2\2AB\7\6\2\2BC\b\7\1\2"+
-		"C\r\3\2\2\2\7\17\25\27\36<";
+		"\5\3\5\3\5\3\5\3\5\3\5\5\5<\n\5\3\6\3\6\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4"+
+		"\6\b\n\f\2\3\3\2\n\16D\2\17\3\2\2\2\4\36\3\2\2\2\6&\3\2\2\2\b;\3\2\2\2"+
+		"\n=\3\2\2\2\f?\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\17\20\3\2\2\2\20\25"+
+		"\3\2\2\2\21\26\5\6\4\2\22\26\5\b\5\2\23\26\5\f\7\2\24\26\7\20\2\2\25\21"+
+		"\3\2\2\2\25\22\3\2\2\2\25\23\3\2\2\2\25\24\3\2\2\2\26\27\3\2\2\2\27\25"+
+		"\3\2\2\2\27\30\3\2\2\2\30\31\3\2\2\2\31\32\b\2\1\2\32\3\3\2\2\2\33\35"+
+		"\7\20\2\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37!\3"+
+		"\2\2\2 \36\3\2\2\2!\"\7\4\2\2\"#\7\f\2\2#$\7\20\2\2$%\b\3\1\2%\5\3\2\2"+
+		"\2&\'\7\3\2\2\'(\7\n\2\2()\7\6\2\2)*\7\5\2\2*+\7\t\2\2+,\7\f\2\2,-\7\7"+
+		"\2\2-.\7\b\2\2./\7\t\2\2/\60\7\f\2\2\60\61\7\20\2\2\61\62\b\4\1\2\62\7"+
+		"\3\2\2\2\63\64\7\n\2\2\64\65\7\20\2\2\65<\b\5\1\2\66\67\7\n\2\2\678\5"+
+		"\n\6\289\7\20\2\29:\b\5\1\2:<\3\2\2\2;\63\3\2\2\2;\66\3\2\2\2<\t\3\2\2"+
+		"\2=>\t\2\2\2>\13\3\2\2\2?@\7\n\2\2@A\7\6\2\2AB\b\7\1\2B\r\3\2\2\2\7\17"+
+		"\25\27\36;";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

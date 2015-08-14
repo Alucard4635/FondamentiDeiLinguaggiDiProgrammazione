@@ -57,13 +57,6 @@ public class BytecodeVocabolary {
 		return word;
 	}
 
-	public static void writeInt(byte[] bytes, int index, int value) {
-		bytes[index + 0] = (byte) ((value >> (8 * 3)) & 0xFF); // get highest
-		bytes[index + 1] = (byte) ((value >> (8 * 2)) & 0xFF);
-		bytes[index + 2] = (byte) ((value >> (8 * 1)) & 0xFF);
-		bytes[index + 3] = (byte) (value & 0xFF);
-	}
-
 	public static void writeInt(ArrayList<Byte> code, int value) {
 		code.add(new Byte((byte) ((value >> (8 * 3)) & 0xFF))); // get highest
 		code.add(new Byte((byte) ((value >> (8 * 2)) & 0xFF)));
