@@ -2,7 +2,6 @@ package assemblerCompirer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
@@ -67,7 +66,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 
 
-	protected void gen(Token instrToken) throws AssemblerException {
+	protected void gen(Token instrToken) {
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
 		if (opcodeI == null) {
@@ -77,7 +76,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 
 	/** Generate code for an instruction with one operand */
-	protected void gen(Token instrToken, Token operandToken)throws AssemblerException {
+	protected void gen(Token instrToken, Token operandToken) {
 		gen(instrToken);
 		genOperand(operandToken);
 	}
@@ -105,7 +104,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
 	}
 
-	protected void checkForUnresolvedReferences() throws AssemblerException {
+	protected void checkForUnresolvedReferences() {
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
@@ -123,7 +122,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		if (constPool.contains(f))
 			constPool.set(constPool.indexOf(f), f);
 		else
-			getConstantPoolIndex(f); // save into constant pool
+			getConstantPoolIndex(f);
 	}
 
 	protected int getConstantPoolIndex(Object o) {
@@ -149,7 +148,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		Tag sym = (Tag) labels.get(id);
 		if (sym == null) {
 			sym = new Tag(id, code.size());
-			labels.put(id, sym); // add to symbol table
+			labels.put(id, sym); 
 		} else {
 			if (sym.isForwardRefered()) {
 				sym.addForwardReference(code.size());
@@ -157,8 +156,30 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 				return sym.whereIs;
 			}
 		}
-		return 0; // we don't know the real address yet
+		return 0; 
 	}
+	
+
+    protected void defineLabel(Token idToken) {
+        String id = idToken.getText();
+        Tag sym = (Tag)labels.get(id);
+        if ( sym==null ) {
+            Tag csym = new Tag(id, ip, false);
+            labels.put(id, csym); // add to symbol table
+        }
+        else {
+            if ( sym.isForwardRefered() ) {
+                sym.setDefined(true);
+                sym.address = ip;
+                sym.resolveForwardReferences(code);
+            }
+            else {
+                // redefinition of symbol
+                System.err.println("line "+idToken.getLine()+
+                        ": redefinition of symbol "+id);
+            }
+        }
+    }
 
 	public AssemblyFunction getMainFunction() {
 		return mainFunction;

@@ -1,7 +1,7 @@
 // Generated from AssemblerGrammar.g4 by ANTLR 4.4
 package assemblerGrammar;
 package assemblerGrammar;
-	import assemblerCompirer.AssemblerException;
+	
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -50,12 +50,13 @@ public class AssemblerGrammarParser extends Parser {
 
 
 	    // Define the functionality required by the parser for code generation
-	    protected void gen(Token instrToken)throws AssemblerException {;}
-	    protected void gen(Token instrToken, Token operandToken)throws AssemblerException {;}
-	    protected void checkForUnresolvedReferences()throws AssemblerException {;}
-	    protected void defineFunction(Token idToken, int nargs, int nlocals)throws AssemblerException {;}
-	    protected void defineDataSize(int n)throws AssemblerException {;}
-	    protected void getLabelAddress(Token idToken)throws AssemblerException {;}
+	    protected void gen(Token instrToken){;}
+	    protected void gen(Token instrToken, Token operandToken){;}
+	    protected void checkForUnresolvedReferences(){;}
+	    protected void defineFunction(Token idToken, int nargs, int nlocals){;}
+	    protected void defineDataSize(int n){;}
+	    protected void getLabelAddress(Token idToken){;}
+	    protected void defineLabel(Token idToken) {;}
 
 	public AssemblerGrammarParser(TokenStream input) {
 		super(input);

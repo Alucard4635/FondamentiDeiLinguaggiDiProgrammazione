@@ -10,17 +10,18 @@ grammar AssemblerGrammar;
 
 @lexer::header {package assemblerGrammar;}
 @parser::header{package assemblerGrammar;
-	import assemblerCompirer.AssemblerException;
+	
 }
 // START: members
 @parser::members {
     // Define the functionality required by the parser for code generation
-    protected void gen(Token instrToken)throws AssemblerException {;}
-    protected void gen(Token instrToken, Token operandToken)throws AssemblerException {;}
-    protected void checkForUnresolvedReferences()throws AssemblerException {;}
-    protected void defineFunction(Token idToken, int nargs, int nlocals)throws AssemblerException {;}
-    protected void defineDataSize(int n)throws AssemblerException {;}
-    protected void getLabelAddress(Token idToken)throws AssemblerException {;}
+    protected void gen(Token instrToken){;}
+    protected void gen(Token instrToken, Token operandToken){;}
+    protected void checkForUnresolvedReferences(){;}
+    protected void defineFunction(Token idToken, int nargs, int nlocals){;}
+    protected void defineDataSize(int n){;}
+    protected void getLabelAddress(Token idToken){;}
+    protected void defineLabel(Token idToken) {;}
 }
 // END: members
 

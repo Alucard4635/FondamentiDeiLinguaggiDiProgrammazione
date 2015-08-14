@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import assemblerCompirer.BytecodeGenerator;
 import assemblerGrammar.AssemblerGrammarLexer;
 
-public class AssemblerProvcessor {
+public class AssemblerProcessor {
 
 	private static final int DEFAULT_OPERAND_STACK_SIZE = 1000;
 	private static final int DEFAULT_CALL_STACK_SIZE = 1000;
@@ -33,7 +33,7 @@ public class AssemblerProvcessor {
 	private int fp = -1; // Function pointer register
 	private AssemblyFunction mainFunction;
 
-	public AssemblerProvcessor() {
+	public AssemblerProcessor() {
 
 	}
 
@@ -74,7 +74,7 @@ public class AssemblerProvcessor {
 
 		}
 
-		AssemblerProvcessor interpreter = new AssemblerProvcessor();
+		AssemblerProcessor interpreter = new AssemblerProcessor();
 		interpreter.load(input);
 		interpreter.exec();
 	}
@@ -105,7 +105,7 @@ public class AssemblerProvcessor {
 	public void exec() throws Exception {
 		// SIMULATE "call main()"; set up stack as if we'd called main()
 		if (mainFunction == null) {
-			mainFunction = new AssemblyFunction("main", 0, 0, 0);
+			throw new InterpreterException();
 		}
 		FunctionRecord f = new FunctionRecord(mainFunction, -1);
 		calls[++fp] = f;

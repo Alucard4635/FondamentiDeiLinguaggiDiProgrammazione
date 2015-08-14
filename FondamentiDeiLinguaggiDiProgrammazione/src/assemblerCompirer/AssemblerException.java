@@ -1,8 +1,8 @@
 package assemblerCompirer;
 
-import assemblerCompirer.AssemblerException.AssemblerExceptionType;
-
 public class AssemblerException extends Exception {
+	public enum AssemblerExceptionType {
+		UNKNOWN_INSTRUCTION, UNDEFINED}
 
 	private int lineOfCode;
 	private String errorCause;
@@ -15,7 +15,17 @@ public class AssemblerException extends Exception {
 				errorCause = cause;
 	}
 
-	public enum AssemblerExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED};
+
+	public int getLineOfCode() {
+		return lineOfCode;
+	}
+
+	public String getErrorCause() {
+		return errorCause;
+	}
+
+	public AssemblerExceptionType getErrorType() {
+		return errorType;
+	};
 
 }
