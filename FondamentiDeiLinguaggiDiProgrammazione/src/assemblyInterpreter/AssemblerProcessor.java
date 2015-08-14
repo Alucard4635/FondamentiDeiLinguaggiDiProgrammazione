@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import assemblerCompirer.BytecodeGenerator;
 import assemblerGrammar.AssemblerGrammarLexer;
+import assemblyInterpreter.InterpreterException.InterpreterExceptionType;
 
 public class AssemblerProcessor {
 
@@ -105,7 +106,7 @@ public class AssemblerProcessor {
 	public void exec() throws Exception {
 		// SIMULATE "call main()"; set up stack as if we'd called main()
 		if (mainFunction == null) {
-			throw new InterpreterException();
+			throw new InterpreterException(InterpreterExceptionType.NO_MAIN);
 		}
 		FunctionRecord f = new FunctionRecord(mainFunction, -1);
 		calls[++fp] = f;

@@ -104,7 +104,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
 	}
 
-	protected void checkForUnresolvedReferences() {
+	protected void checkForUnresolvedReferences() {//TODO devo farlo io
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
@@ -160,7 +160,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 	
 
-    protected void defineLabel(Token idToken) {
+    protected void defineLabel(Token idToken) {//TODO devo farla io
         String id = idToken.getText();
         Tag sym = (Tag)labels.get(id);
         if ( sym==null ) {

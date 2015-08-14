@@ -88,6 +88,7 @@ public class AssemblerGrammarParser extends Parser {
 	    protected void defineFunction(Token idToken, int nargs, int nlocals){;}
 	    protected void defineDataSize(int n){;}
 	    protected void getLabelAddress(Token idToken){;}
+	    protected void defineLabel(Token idToken) {;}
 
 	public AssemblerGrammarParser(TokenStream input) {
 		super(input);

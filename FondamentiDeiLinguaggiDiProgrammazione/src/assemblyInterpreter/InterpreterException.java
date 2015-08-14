@@ -1,9 +1,11 @@
 package assemblyInterpreter;
 
+import assemblyInterpreter.InterpreterException.InterpreterExceptionType;
+
 
 public class InterpreterException extends Exception {
 	public enum InterpreterExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED}
+		UNKNOWN_INSTRUCTION, UNDEFINED, NO_MAIN}
 
 	private int lineOfCode;
 	private String errorCause;
@@ -14,6 +16,10 @@ public class InterpreterException extends Exception {
 				errorType = type;
 				lineOfCode = line;
 				errorCause = cause;
+	}
+
+	public InterpreterException(InterpreterExceptionType noMain) {
+		errorType = noMain;
 	}
 
 	public enum AssemblerExceptionType {
