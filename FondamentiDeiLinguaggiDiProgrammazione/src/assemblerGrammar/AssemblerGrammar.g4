@@ -27,10 +27,11 @@ grammar AssemblerGrammar;
 
 program
     :   globals?
-        ( functionDeclaration | instr | label | NEWLINE )+
+    ( functionDeclaration | instr | label )
+   	(NEWLINE+( functionDeclaration | instr | label ))*
         {checkForUnresolvedReferences();}
     ;
-   
+/////////////////////////////////FIXME i try with NEWLINE first
 // how much data space
 // START: data
 globals : NEWLINE* '.globals' INT NEWLINE {defineDataSize($INT.int);} ;
@@ -39,15 +40,15 @@ globals : NEWLINE* '.globals' INT NEWLINE {defineDataSize($INT.int);} ;
 //  .def fact: args=1, locals=0
 // START: func
 functionDeclaration
-    : '.def' name=ID ':' 'args' '=' a=INT ',' 'locals' '=' n=INT NEWLINE
+    : '.def' name=ID ':' 'args' '=' a=INT ',' 'locals' '=' n=INT 
       {defineFunction($name, $a.int, $n.int);}
     ;
 // END: func
 
 // START: instr
 instr
-    :   ID NEWLINE                         {gen($ID);}
-    |   ID operand NEWLINE                 {gen($ID,$operand.start);}
+    :   ID                          {gen($ID);}
+    |   ID operand                  {gen($ID,$operand.start);}
     ;
 // END: instr
 
