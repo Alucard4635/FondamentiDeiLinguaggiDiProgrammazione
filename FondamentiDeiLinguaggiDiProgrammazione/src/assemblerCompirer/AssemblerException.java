@@ -1,6 +1,6 @@
 package assemblerCompirer;
 
-public class AssemblerException extends Exception {
+public class AssemblerException extends RuntimeException {
 	public enum AssemblerExceptionType {
 		UNKNOWN_INSTRUCTION, UNDEFINED}
 

@@ -2,7 +2,7 @@ package assemblerCompirer;
 
 public class Tag {
 	public final String name;
-	public final int whereIs;
+	private int whereIs;
 	private boolean isDefined=false;
 	private int forwardReferedAddress=-1;
 
@@ -17,10 +17,16 @@ public class Tag {
 		this.isDefined = isDefined;
 	}
 	public boolean isForwardRefered() {
-		return forwardReferedAddress<0;
+		return forwardReferedAddress>0;
 	}
 	public void addForwardReference(int ip) {
 		forwardReferedAddress=ip;
+	}
+	public int getWhereIs() {
+		return whereIs;
+	}
+	public void setAddress(int size) {
+		whereIs=size;
 	}
 
 

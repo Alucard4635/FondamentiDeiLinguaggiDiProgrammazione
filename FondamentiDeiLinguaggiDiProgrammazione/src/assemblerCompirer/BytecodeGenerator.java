@@ -108,7 +108,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
-				throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNDEFINED,sym.whereIs,sym.name);
+				throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNDEFINED,sym.getWhereIs(),sym.name);
 			}
 		}
 	}
@@ -153,7 +153,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			if (sym.isForwardRefered()) {
 				sym.addForwardReference(code.size());
 			} else {
-				return sym.whereIs;
+				return sym.getWhereIs();
 			}
 		}
 		return 0; 
@@ -163,15 +163,15 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
     protected void defineLabel(Token idToken) {//TODO devo farla io
         String id = idToken.getText();
         Tag sym = (Tag)labels.get(id);
-        if ( sym==null ) {
-            Tag csym = new Tag(id, ip, false);
+        if ( sym==null ) { 
+            Tag csym = new Tag(id, code.size());
             labels.put(id, csym); // add to symbol table
         }
         else {
             if ( sym.isForwardRefered() ) {
                 sym.setDefined(true);
-                sym.address = ip;
-                sym.resolveForwardReferences(code);
+                sym.setAddress(code.size());
+                sym.addForwardReference(code.size());
             }
             else {
                 // redefinition of symbol
