@@ -165,7 +165,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
     protected void defineAddressLabel(Token idToken) {//TODO devo farla io
         String id = idToken.getText();
         Tag sym = (Tag)labels.get(id);
-        if ( sym==null ) { 
+        if ( sym==null ) {
             Tag csym = new Tag(id, code.size());
             labels.put(id, csym); // add to symbol table
         }
