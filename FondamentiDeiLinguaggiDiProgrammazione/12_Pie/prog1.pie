@@ -1,0 +1,12 @@
+struct Point {x, y}  # define a struct symbol in global scope
+p = new Point        # create a new Point inst.; store in global var
+p.x = 1              # set the fields of p
+p.y = 2 + 3
+x = p    # define global variable x
+def f(y): # define f in the global space
+  x=2     # set global variable x
+  y=3     # set parameter y
+  z=4     # create local variable z
+  return 3
+.         # end of statement list
+x = f(5)      # call f with parameter y = 5
