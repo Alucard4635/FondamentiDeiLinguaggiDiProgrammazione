@@ -108,7 +108,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
-				throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNDEFINED,sym.getWhereIs(),sym.name);
+				throw new AssemblerException(AssemblerException.AssemblerExceptionType.UNDEFINED,sym.whereIs,sym.name);
 			}
 		}
 	}
@@ -155,7 +155,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			if (sym.isForwardRefered()) {
 				sym.addForwardReference(code.size());
 			} else {
-				return sym.getWhereIs();
+				return sym.whereIs;
 			}
 		}
 		return 0; 
@@ -172,7 +172,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
         else {
             if (sym.isForwardRefered()) {//TODO ho modificato giusto?
                 sym.setDefined(true);
-                sym.setAddress(code.size());
+                //sym.setAddress(code.size());
                 sym.addForwardReference(code.size());
             }
             else {
