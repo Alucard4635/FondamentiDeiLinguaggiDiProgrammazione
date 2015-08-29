@@ -17,7 +17,7 @@ public class Tag {
 		this.isDefined = isDefined;
 	}
 	public boolean isForwardRefered() {
-		return forwardReferedAddress>0;
+		return forwardReferedAddress<0;
 	}
 	public void addForwardReference(int ip) {
 		forwardReferedAddress=ip;

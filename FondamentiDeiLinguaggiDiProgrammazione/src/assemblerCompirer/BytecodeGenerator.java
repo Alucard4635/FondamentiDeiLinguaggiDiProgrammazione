@@ -126,8 +126,10 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 
 	protected int getConstantPoolIndex(Object o) {
-		if (constPool.contains(o))
-			return constPool.indexOf(o);
+		int indexOf = constPool.indexOf(o);
+		if (indexOf>0) {
+			return indexOf;
+		}
 		constPool.add(o);
 		return constPool.size() - 1;
 	}
@@ -159,8 +161,8 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return 0; 
 	}
 	
-
-    protected void defineLabel(Token idToken) {//TODO devo farla io
+	@Override
+    protected void defineAddressLabel(Token idToken) {//TODO devo farla io
         String id = idToken.getText();
         Tag sym = (Tag)labels.get(id);
         if ( sym==null ) { 
@@ -168,7 +170,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
             labels.put(id, csym); // add to symbol table
         }
         else {
-            if ( sym.isForwardRefered() ) {
+            if (sym.isForwardRefered()) {//TODO ho modificato giusto?
                 sym.setDefined(true);
                 sym.setAddress(code.size());
                 sym.addForwardReference(code.size());

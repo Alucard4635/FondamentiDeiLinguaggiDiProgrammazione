@@ -21,7 +21,7 @@ grammar AssemblerGrammar;
     protected void defineFunction(Token idToken, int nargs, int nlocals){;}
     protected void defineDataSize(int n){;}
     protected void getLabelAddress(Token idToken){;}
-    protected void defineLabel(Token idToken) {;}
+    protected void defineAddressLabel(Token idToken) {;}
 }
 // END: members
 
@@ -62,7 +62,7 @@ operand
     ;
 
 label
-    :   ID ':' {defineLabel($ID);}
+    :   ID ':' {defineAddressLabel($ID);}
     ;
 
 ID  :   LETTER (LETTER | '0'..'9')* ;
