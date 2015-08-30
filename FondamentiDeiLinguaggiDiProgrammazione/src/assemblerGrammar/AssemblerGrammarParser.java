@@ -23,9 +23,9 @@ public class AssemblerGrammarParser extends Parser {
 		INT=10, STRING=11, FLOAT=12, WS=13, NEWLINE=14;
 	public static final int
 		RULE_program = 0, RULE_globals = 1, RULE_functionDeclaration = 2, RULE_instr = 3, 
-		RULE_operand = 4, RULE_label = 5;
+		RULE_operand = 4, RULE_labelAddress = 5;
 	public static final String[] ruleNames = {
-		"program", "globals", "functionDeclaration", "instr", "operand", "label"
+		"program", "globals", "functionDeclaration", "instr", "operand", "labelAddress"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -107,11 +107,11 @@ public class AssemblerGrammarParser extends Parser {
 		public InstrContext instr(int i) {
 			return getRuleContext(InstrContext.class,i);
 		}
-		public List<LabelContext> label() {
-			return getRuleContexts(LabelContext.class);
+		public List<LabelAddressContext> labelAddress() {
+			return getRuleContexts(LabelAddressContext.class);
 		}
-		public LabelContext label(int i) {
-			return getRuleContext(LabelContext.class,i);
+		public LabelAddressContext labelAddress(int i) {
+			return getRuleContext(LabelAddressContext.class,i);
 		}
 		public GlobalsContext globals() {
 			return getRuleContext(GlobalsContext.class,0);
@@ -167,7 +167,7 @@ public class AssemblerGrammarParser extends Parser {
 			case 3:
 				{
 				setState(17);
-				label();
+				labelAddress();
 				}
 				break;
 			}
@@ -208,7 +208,7 @@ public class AssemblerGrammarParser extends Parser {
 				case 3:
 					{
 					setState(27);
-					label();
+					labelAddress();
 					}
 					break;
 				}
@@ -462,34 +462,34 @@ public class AssemblerGrammarParser extends Parser {
 		return _localctx;
 	}
 
-	public static class LabelContext extends ParserRuleContext {
+	public static class LabelAddressContext extends ParserRuleContext {
 		public Token ID;
 		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public LabelContext(ParserRuleContext parent, int invokingState) {
+		public LabelAddressContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_label; }
+		@Override public int getRuleIndex() { return RULE_labelAddress; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).enterLabel(this);
+			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).enterLabelAddress(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).exitLabel(this);
+			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).exitLabelAddress(this);
 		}
 	}
 
-	public final LabelContext label() throws RecognitionException {
-		LabelContext _localctx = new LabelContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_label);
+	public final LabelAddressContext labelAddress() throws RecognitionException {
+		LabelAddressContext _localctx = new LabelAddressContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_labelAddress);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(70);
-			((LabelContext)_localctx).ID = match(ID);
+			((LabelAddressContext)_localctx).ID = match(ID);
 			setState(71);
 			match(T__2);
-			defineAddressLabel(((LabelContext)_localctx).ID);
+			defineAddressLabel(((LabelAddressContext)_localctx).ID);
 			}
 		}
 		catch (RecognitionException re) {

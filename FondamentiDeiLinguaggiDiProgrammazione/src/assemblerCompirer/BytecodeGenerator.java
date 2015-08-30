@@ -146,7 +146,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return getConstantPoolIndex(id);
 	}
 
-	protected int getLabelAddress(String id) {
+	protected int getLabelAddress(String id) {//TODO funziona?
 		Tag sym = (Tag) labels.get(id);
 		if (sym == null) {
 			sym = new Tag(id, code.size());
@@ -162,7 +162,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 	
 	@Override
-    protected void defineAddressLabel(Token idToken) {//TODO devo farla io
+    protected void defineAddressLabel(Token idToken) {
         String id = idToken.getText();
         Tag sym = (Tag)labels.get(id);
         if ( sym==null ) {
@@ -170,15 +170,12 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
             labels.put(id, csym); // add to symbol table
         }
         else {
-            if (sym.isForwardRefered()) {//TODO ho modificato giusto?
+            if (sym.isForwardRefered()) {
                 sym.setDefined(true);
-                //sym.setAddress(code.size());
                 sym.addForwardReference(code.size());
             }
             else {
-                // redefinition of symbol
-                System.err.println("line "+idToken.getLine()+
-                        ": redefinition of symbol "+id);
+            	throw new AssemblerException(AssemblerException.AssemblerExceptionType.AlRADY_DEFINED,sym.whereIs,sym.name);
             }
         }
     }

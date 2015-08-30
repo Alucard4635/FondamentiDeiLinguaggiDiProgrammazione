@@ -20,6 +20,18 @@ public class AssemblerGrammarBaseListener implements AssemblerGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLabelAddress(@NotNull AssemblerGrammarParser.LabelAddressContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLabelAddress(@NotNull AssemblerGrammarParser.LabelAddressContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGlobals(@NotNull AssemblerGrammarParser.GlobalsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -51,18 +63,6 @@ public class AssemblerGrammarBaseListener implements AssemblerGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProgram(@NotNull AssemblerGrammarParser.ProgramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLabel(@NotNull AssemblerGrammarParser.LabelContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLabel(@NotNull AssemblerGrammarParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

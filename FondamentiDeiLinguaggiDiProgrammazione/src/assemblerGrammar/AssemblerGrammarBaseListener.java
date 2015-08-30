@@ -78,13 +78,13 @@ public class AssemblerGrammarBaseListener implements AssemblerGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLabel(AssemblerGrammarParser.LabelContext ctx) { }
+	@Override public void enterLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLabel(AssemblerGrammarParser.LabelContext ctx) { }
+	@Override public void exitLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

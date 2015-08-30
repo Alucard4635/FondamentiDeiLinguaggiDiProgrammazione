@@ -12,6 +12,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface AssemblerGrammarListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabelAddress(@NotNull AssemblerGrammarParser.LabelAddressContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabelAddress(@NotNull AssemblerGrammarParser.LabelAddressContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AssemblerGrammarParser#globals}.
 	 * @param ctx the parse tree
 	 */
@@ -41,16 +51,6 @@ public interface AssemblerGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProgram(@NotNull AssemblerGrammarParser.ProgramContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link AssemblerGrammarParser#label}.
-	 * @param ctx the parse tree
-	 */
-	void enterLabel(@NotNull AssemblerGrammarParser.LabelContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link AssemblerGrammarParser#label}.
-	 * @param ctx the parse tree
-	 */
-	void exitLabel(@NotNull AssemblerGrammarParser.LabelContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AssemblerGrammarParser#functionDeclaration}.
 	 * @param ctx the parse tree

@@ -60,13 +60,13 @@ public interface AssemblerGrammarListener extends ParseTreeListener {
 	 */
 	void exitOperand(AssemblerGrammarParser.OperandContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AssemblerGrammarParser#label}.
+	 * Enter a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
 	 * @param ctx the parse tree
 	 */
-	void enterLabel(AssemblerGrammarParser.LabelContext ctx);
+	void enterLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AssemblerGrammarParser#label}.
+	 * Exit a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
 	 * @param ctx the parse tree
 	 */
-	void exitLabel(AssemblerGrammarParser.LabelContext ctx);
+	void exitLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
 }

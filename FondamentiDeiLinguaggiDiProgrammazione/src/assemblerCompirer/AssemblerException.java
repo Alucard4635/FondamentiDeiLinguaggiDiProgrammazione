@@ -2,7 +2,7 @@ package assemblerCompirer;
 
 public class AssemblerException extends RuntimeException {
 	public enum AssemblerExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED}
+		UNKNOWN_INSTRUCTION, UNDEFINED, AlRADY_DEFINED}
 
 	private int lineOfCode;
 	private String errorCause;

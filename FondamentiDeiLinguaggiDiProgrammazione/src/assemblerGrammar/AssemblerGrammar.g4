@@ -27,8 +27,8 @@ grammar AssemblerGrammar;
 
 program
     :   globals?
-    ( functionDeclaration | instr | label )
-   	(NEWLINE+( functionDeclaration | instr | label ))*
+    ( functionDeclaration | instr | labelAddress )
+   	(NEWLINE+( functionDeclaration | instr | labelAddress ))*
         {checkForUnresolvedReferences();}
     ;
 /////////////////////////////////FIXME i try with NEWLINE first
@@ -61,7 +61,7 @@ operand
     |   FLOAT
     ;
 
-label
+labelAddress
     :   ID ':' {defineAddressLabel($ID);}
     ;
 
