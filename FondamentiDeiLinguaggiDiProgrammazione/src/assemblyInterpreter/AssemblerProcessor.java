@@ -38,49 +38,7 @@ public class AssemblerProcessor {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		String filename = null;
-		/*
-		 * boolean trace = false; // PROCESS ARGS boolean disassemble = false;
-		 * boolean dump = false; int i = 0; while ( i<args.length ) { if (
-		 * args[i].equals("-trace") ) { trace = true; i++; } else if (
-		 * args[i].equals("-dis") ) { disassemble = true; i++; } else if (
-		 * args[i].equals("-dump") ) { dump = true; i++; } else { filename =
-		 * args[i]; i++; } }
-		 */
-		if (args.length > 0) {
-			filename = args[0];
-		}
-		InputStream input = null;
-		if (filename != null)
-			input = new FileInputStream(filename);
-		else {
-			JFileChooser fc = new JFileChooser(new File(".").getCanonicalPath());
-			fc.setMultiSelectionEnabled(false);
-			int responce = fc.showOpenDialog(null);
-			if (responce == JFileChooser.APPROVE_OPTION) {
-				File selectedFile = fc.getSelectedFile();
-				input = new FileInputStream(selectedFile);
-
-			} else if (responce == JFileChooser.ERROR_OPTION) {
-				System.out.println("error while opening JFileChooser");
-				System.out.println("Enter File Name: ");
-				BufferedReader bufferedReader = new BufferedReader(
-						new InputStreamReader(System.in));
-				filename = bufferedReader.readLine();
-				input = new FileInputStream(filename);
-			} else {
-				System.exit(0);
-			}
-
-		}
-
-		AssemblerProcessor interpreter = new AssemblerProcessor();
-		interpreter.load(input);
-		interpreter.exec();
-	}
-
-	public boolean load(InputStream input) throws Exception {
+	public boolean loadAssemblerCode(InputStream input) throws Exception {
 		boolean hasErrors = false;
 		try {
 
@@ -103,7 +61,7 @@ public class AssemblerProcessor {
 		return hasErrors;
 	}
 
-	public void exec() throws Exception {
+	public void start() throws Exception {
 		// SIMULATE "call main()"; set up stack as if we'd called main()
 		if (mainFunction == null) {
 			throw new InterpreterException(InterpreterExceptionType.NO_MAIN);
