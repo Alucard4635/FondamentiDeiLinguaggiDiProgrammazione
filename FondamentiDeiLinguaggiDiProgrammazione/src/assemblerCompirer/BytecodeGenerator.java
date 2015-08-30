@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
+import org.stringtemplate.v4.compiler.STParser.ifstat_return;
 
+import assemblerCompirer.AssemblerException.AssemblerExceptionType;
 import assemblerGrammar.AssemblerGrammarParser;
 import assemblyInterpreter.AssemblyFunction;
 import assemblyInterpreter.BytecodeVocabolary;
@@ -66,8 +68,8 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		dataSize = n;
 	}
 
-
-	protected void gen(Token instrToken) {
+	@Override
+	protected void generateInstruction(Token instrToken) {
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
 		if (opcodeI == null) {
@@ -77,10 +79,12 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 
 	/** Generate code for an instruction with one operand */
-	protected void gen(Token instrToken, Token operandToken) {
-		gen(instrToken);
+	@Override
+	protected void generateInstruction(Token instrToken, Token operandToken) {
+		generateInstruction(instrToken);
 		genOperand(operandToken);
 	}
+	
 
 	protected void genOperand(Token operandToken) {
 		String text = operandToken.getText();
@@ -105,7 +109,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
 	}
 
-	protected void checkForUnresolvedReferences() {//TODO devo farlo io
+	protected void checkForUnresolvedReferences() {
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
@@ -118,12 +122,14 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		String name = idToken.getText();
 		AssemblyFunction f = new AssemblyFunction(name, args, locals,
 				code.size());
-		if (name.equals("main"))
+		if (name.equals("main")){
 			setMainFunction(f);
-		if (constPool.contains(f))
+		}
+		if (constPool.contains(f)){
 			constPool.set(constPool.indexOf(f), f);
-		else
+		}else{
 			getConstantPoolIndex(f);
+		}
 	}
 
 	protected int getConstantPoolIndex(Object o) {
@@ -146,31 +152,30 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		}
 		return getConstantPoolIndex(id);
 	}
-
-	protected int getLabelAddress(String id) {//TODO funziona?non credo
-		Tag sym = (Tag) labels.get(id);
-		if (sym == null) {
-			sym = new Tag(id, code.size());
-			labels.put(id, sym); 
-			sym.addForwardReference(code.size());
+	protected int getLabelAddress(String label) {
+		Tag symbol = (Tag) labels.get(label);
+		if (symbol == null) {
+			symbol = new Tag(label, code.size());
+			labels.put(label, symbol); 
+			symbol.addForwardReference(code.size());
 		} else {
-			if (sym.isDefined()) {//TODO perchè?
-				sym.addForwardReference(code.size());//last byte of operation, before address
+			if (symbol.isDefined()) {
+				symbol.addForwardReference(code.size());//last byte of operation, before address
 			} else {
-				return sym.whereIs;
+				return symbol.whereIs;
 			}
 		}
 		return -1; 
 	}
 	
 	@Override
-    protected void defineAddressLabel(Token idToken) {//TODO
-        String id = idToken.getText();
-        Tag foundTag = (Tag)labels.get(id);
+    protected void defineAddressLabel(Token idToken) {
+        String label = idToken.getText();
+        Tag foundTag = (Tag)labels.get(label);
         if ( foundTag==null ) {
-            Tag newTag = new Tag(id, code.size());
+            Tag newTag = new Tag(label, code.size());
             newTag.setDefinitionAddress(code.size());
-            labels.put(id, newTag); 
+            labels.put(label, newTag); 
         }
         else {
             if (foundTag.isForwardRefered()) {
@@ -203,7 +208,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return mainFunction;
 	}
 
-	public void setMainFunction(AssemblyFunction mainFunction) {
-		this.mainFunction = mainFunction;
+	public void setMainFunction(AssemblyFunction main) {
+		mainFunction = main;
 	}
 }
