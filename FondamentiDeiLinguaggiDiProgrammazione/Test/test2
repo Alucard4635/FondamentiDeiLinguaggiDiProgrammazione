@@ -19,6 +19,6 @@ gload 0
 iconst 1
 iadd
 gstore 0
-gload 1
+gload 0
 print
-ret
+br loop

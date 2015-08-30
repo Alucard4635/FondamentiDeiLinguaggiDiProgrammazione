@@ -1,3 +1,6 @@
+.def main: args=0 ,locals=0
+loop:
 sconst "Ciao Bello"
 print
+br loop
 halt

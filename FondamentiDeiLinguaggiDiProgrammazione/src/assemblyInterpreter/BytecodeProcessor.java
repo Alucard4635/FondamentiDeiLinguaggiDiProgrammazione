@@ -45,7 +45,7 @@ public class BytecodeProcessor {
 			this.codeSize = assembler.getCodeMemorySize();
 			this.constPool = assembler.getConstantPool();
 			this.mainFunction = assembler.getMainFunction();
-			this.globals = new Object[assembler.getDataSize()];
+			this.globals = new Object[assembler.getGlobalLength()];
 
 			hasErrors = assembler.getNumberOfSyntaxErrors() > 0;
 		} finally {

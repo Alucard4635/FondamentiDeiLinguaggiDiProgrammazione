@@ -14,7 +14,7 @@ public class Tag {
 		whereIs=ip;
 	}
 	public boolean isDefined() {
-		return definitionAddress>0;
+		return definitionAddress>=0;
 	}
 	public boolean isForwardRefered() {
 		return forwardReferedAddress.size()>0;

@@ -16,7 +16,7 @@ import assemblyInterpreter.BytecodeVocabolary;
 import assemblyInterpreter.Instruction;
 
 public class BytecodeGenerator extends AssemblerGrammarParser {
-
+	private static final boolean DEBUG=false;
 	private static final int INITIAL_CODE_SIZE = 2048;
 	protected Map<String, Integer> instructionOpcodeMapping = new HashMap<String, Integer>();
 	protected Map<String, Tag> labels = new HashMap<String, Tag>();// label
@@ -28,7 +28,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	private ArrayList<Object> constPool = new ArrayList<Object>();
 	private ArrayList<Byte> code = new ArrayList<Byte>(INITIAL_CODE_SIZE); // code
 																			// memory
-	private int dataSize; // set via .globals
+	private int globalLength; // set via .globals
 	private AssemblyFunction mainFunction;
 
 	public BytecodeGenerator(TokenStream input) {
@@ -60,16 +60,19 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return code.size();
 	}
 
-	public int getDataSize() {
-		return dataSize;
+	public int getGlobalLength() {
+		return globalLength;
 	}
-
-	protected void defineDataSize(int n) {
-		dataSize = n;
+	@Override
+	protected void setGlobalLength(int n) {
+		globalLength = n;
 	}
 
 	@Override
 	protected void generateInstruction(Token instrToken) {
+		if (DEBUG) {
+			System.out.println("genereting: "+instrToken);
+		}
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
 		if (opcodeI == null) {
@@ -82,11 +85,12 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	@Override
 	protected void generateInstruction(Token instrToken, Token operandToken) {
 		generateInstruction(instrToken);
-		genOperand(operandToken);
+		generateOperand(operandToken);
 	}
 	
 
-	protected void genOperand(Token operandToken) {
+	protected void generateOperand(Token operandToken) {
+		
 		String text = operandToken.getText();
 		int v = 0;
 		switch (operandToken.getType()) { // switch on token type
@@ -106,10 +110,16 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			v = getFunctionIndex(text);
 			break;
 		}
+		if (DEBUG) {
+			System.out.println("genereting: "+operandToken+" and is "+v);
+		}
 		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
 	}
 
 	protected void checkForUnresolvedReferences() {
+		if (DEBUG) {
+			System.out.println("checkForUnresolvedReferences");
+		}
 		for (String name : labels.keySet()) {
 			Tag sym = (Tag) labels.get(name);
 			if (!sym.isDefined()) {
@@ -119,6 +129,9 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	}
 
 	protected void defineFunction(Token idToken, int args, int locals) {
+		if (DEBUG) {
+			System.out.println("defineFunction: "+idToken+" A"+args+" L"+locals);
+		}
 		String name = idToken.getText();
 		AssemblyFunction f = new AssemblyFunction(name, args, locals,
 				code.size());
@@ -153,23 +166,33 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return getConstantPoolIndex(id);
 	}
 	protected int getLabelAddress(String label) {
+		if (DEBUG) {
+			System.out.println("getAddress: "+label);
+		}
+		
 		Tag symbol = (Tag) labels.get(label);
 		if (symbol == null) {
 			symbol = new Tag(label, code.size());
 			labels.put(label, symbol); 
 			symbol.addForwardReference(code.size());
 		} else {
-			if (symbol.isDefined()) {
+			if (!symbol.isDefined()) {
 				symbol.addForwardReference(code.size());//last byte of operation, before address
 			} else {
 				return symbol.whereIs;
 			}
+		}
+		if (DEBUG) {
+			System.out.println("not Found: "+label);
 		}
 		return -1; 
 	}
 	
 	@Override
     protected void defineAddressLabel(Token idToken) {
+		if (DEBUG) {
+			System.out.println("defining: "+idToken);
+		}
         String label = idToken.getText();
         Tag foundTag = (Tag)labels.get(label);
         if ( foundTag==null ) {
