@@ -1,26 +1,38 @@
 package assemblerCompirer;
 
+import java.util.LinkedList;
+
 public class Tag {
 	public final String name;
 	public final int whereIs;
-	private boolean isDefined=false;
-	private int forwardReferedAddress=-1;
+	private LinkedList<Integer> forwardReferedAddress=new LinkedList<Integer>();
+	private int definitionAddress=-1;
+	
 
 	public Tag(String id, int ip) {
 		this.name = id;
 		whereIs=ip;
 	}
 	public boolean isDefined() {
-		return isDefined;
-	}
-	public void setDefined(boolean isDefined) {
-		this.isDefined = isDefined;
+		return definitionAddress>0;
 	}
 	public boolean isForwardRefered() {
-		return forwardReferedAddress<0;
+		return forwardReferedAddress.size()>0;
 	}
 	public void addForwardReference(int ip) {
-		forwardReferedAddress=ip;
+		forwardReferedAddress.add(ip);
+	}
+	public LinkedList<Integer> getForwardReferedAddress() {
+		return forwardReferedAddress;
+	}
+	public void setForwardReferedAddress(LinkedList<Integer> forwardReferedAddress) {
+		this.forwardReferedAddress = forwardReferedAddress;
+	}
+	public int getDefinitionAddress() {
+		return definitionAddress;
+	}
+	public void setDefinitionAddress(int definitionAddress) {
+		this.definitionAddress = definitionAddress;
 	}
 	
 

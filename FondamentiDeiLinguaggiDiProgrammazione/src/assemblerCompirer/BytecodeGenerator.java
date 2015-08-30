@@ -2,6 +2,7 @@ package assemblerCompirer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
@@ -146,39 +147,57 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		return getConstantPoolIndex(id);
 	}
 
-	protected int getLabelAddress(String id) {//TODO funziona?
+	protected int getLabelAddress(String id) {//TODO funziona?non credo
 		Tag sym = (Tag) labels.get(id);
 		if (sym == null) {
 			sym = new Tag(id, code.size());
 			labels.put(id, sym); 
+			sym.addForwardReference(code.size());
 		} else {
-			if (sym.isForwardRefered()) {
-				sym.addForwardReference(code.size());
+			if (sym.isDefined()) {//TODO perchè?
+				sym.addForwardReference(code.size());//last byte of operation, before address
 			} else {
 				return sym.whereIs;
 			}
 		}
-		return 0; 
+		return -1; 
 	}
 	
 	@Override
-    protected void defineAddressLabel(Token idToken) {
+    protected void defineAddressLabel(Token idToken) {//TODO
         String id = idToken.getText();
-        Tag sym = (Tag)labels.get(id);
-        if ( sym==null ) {
-            Tag csym = new Tag(id, code.size());
-            labels.put(id, csym); // add to symbol table
+        Tag foundTag = (Tag)labels.get(id);
+        if ( foundTag==null ) {
+            Tag newTag = new Tag(id, code.size());
+            newTag.setDefinitionAddress(code.size());
+            labels.put(id, newTag); 
         }
         else {
-            if (sym.isForwardRefered()) {
-                sym.setDefined(true);
-                sym.addForwardReference(code.size());
+            if (foundTag.isForwardRefered()) {
+            	foundTag.setDefinitionAddress(code.size());
+                resolveReference(foundTag.getForwardReferedAddress(),foundTag.getDefinitionAddress());
             }
             else {
-            	throw new AssemblerException(AssemblerException.AssemblerExceptionType.AlRADY_DEFINED,sym.whereIs,sym.name);
+            	throw new AssemblerException(AssemblerException.AssemblerExceptionType.AlRADY_DEFINED,foundTag.whereIs,foundTag.name);
             }
         }
     }
+
+	private void resolveReference(LinkedList<Integer> forwardReferedAddress,
+			int definitionAddress) {
+		Integer poppedAddress;
+		while (!forwardReferedAddress.isEmpty()) {
+			poppedAddress = forwardReferedAddress.pop();
+			Byte byteToSet = (new Byte((byte) ((definitionAddress >> (8 * 3)) & 0xFF))); //first byte
+			code.set(poppedAddress++, byteToSet);
+			byteToSet = new Byte((byte) ((definitionAddress >> (8 * 2)) & 0xFF));//second one
+			code.set(poppedAddress++, byteToSet);
+			byteToSet = new Byte((byte) ((definitionAddress >> (8 * 1)) & 0xFF));
+			code.set(poppedAddress++, byteToSet);
+			byteToSet = new Byte((byte) (definitionAddress & 0xFF));
+			code.set(poppedAddress, byteToSet);
+		}
+	}
 
 	public AssemblyFunction getMainFunction() {
 		return mainFunction;
