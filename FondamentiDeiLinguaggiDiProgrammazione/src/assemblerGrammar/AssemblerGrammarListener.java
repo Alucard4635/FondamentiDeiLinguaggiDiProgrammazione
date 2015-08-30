@@ -40,6 +40,16 @@ public interface AssemblerGrammarListener extends ParseTreeListener {
 	 */
 	void exitFunctionDeclaration(AssemblerGrammarParser.FunctionDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AssemblerGrammarParser#instr}.
 	 * @param ctx the parse tree
 	 */
@@ -59,14 +69,4 @@ public interface AssemblerGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperand(AssemblerGrammarParser.OperandContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
-	 * @param ctx the parse tree
-	 */
-	void enterLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link AssemblerGrammarParser#labelAddress}.
-	 * @param ctx the parse tree
-	 */
-	void exitLabelAddress(AssemblerGrammarParser.LabelAddressContext ctx);
 }

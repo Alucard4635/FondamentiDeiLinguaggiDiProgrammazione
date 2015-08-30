@@ -19,17 +19,17 @@ public class BytecodeVocabolary {
 			// Function
 			CALL = 7, RET = 8,
 			// Integer
-			IADD = 9, ISUB = 10, IMUL = 11, ILT = 12, IEQ = 13,
+			IADD = 9, ISUB = 10, IMUL = 11, ILT = 12,IGT = 13, IEQ = 14,
 			// Float
-			FADD = 14, FSUB = 15, FMUL = 16, FLT = 17, FEQ = 18,
+			FADD = 15, FSUB = 16, FMUL = 17, FLT = 18,FGT=19, FEQ = 20,
 			// Conversion
-			ITOF = 19,
+			ITOF = 21,
 			// Add Constant To Operand's Stack
-			ICONST = 20, // int
-			SCONST = 21, // float
-			FCONST = 22, // String
+			ICONST = 22, // int
+			SCONST = 23, // float
+			FCONST = 24, // String
 			// Branch
-			BR = 23, BRT = 24, BRF = 25;
+			BR = 25, BRT = 26, BRF = 27;
 
 	/** Used for assembly/disassembly; describes instruction set */
 	public static final Instruction[] instructions = new Instruction[] {
@@ -40,9 +40,10 @@ public class BytecodeVocabolary {
 			new Instruction("call"), new Instruction("ret"),
 			new Instruction("iadd"), new Instruction("isub"),
 			new Instruction("imul"), new Instruction("ilt"),
-			new Instruction("ieq"), new Instruction("fadd"),
-			new Instruction("fsub"), new Instruction("fmul"),
-			new Instruction("flt"), new Instruction("feq"),
+			new Instruction("igt"),	new Instruction("ieq"),
+			new Instruction("fadd"),new Instruction("fsub"),
+			new Instruction("fmul"),new Instruction("flt"),
+			new Instruction("fgt"),	new Instruction("feq"),
 			new Instruction("itof"), new Instruction("iconst"),
 			new Instruction("sconst"), new Instruction("fconst"),
 			new Instruction("br"), new Instruction("brt"),new Instruction("brf") // index is the opcode

@@ -113,6 +113,11 @@ public class BytecodeProcessor {
 				opI1 = (Integer) topOperand();
 				operands[sp] = opI1 < opI2;
 				break;
+			case BytecodeVocabolary.IGT:
+				opI2 = (Integer) popOperand(); 
+				opI1 = (Integer) topOperand();
+				operands[sp] = opI1 > opI2;
+				break;
 			case BytecodeVocabolary.IEQ:
 				opI2 = (Integer) popOperand(); 
 				opI1 = (Integer) topOperand();
@@ -134,6 +139,11 @@ public class BytecodeProcessor {
 				operands[sp] = opF1 * opF2;
 				break;
 			case BytecodeVocabolary.FLT:
+				opF2 = (Float) popOperand(); 
+				opF1 = (Float) topOperand();
+				operands[sp] = opF1 < opF2;
+				break;
+			case BytecodeVocabolary.FGT:
 				opF2 = (Float) popOperand(); 
 				opF1 = (Float) topOperand();
 				operands[sp] = opF1 < opF2;

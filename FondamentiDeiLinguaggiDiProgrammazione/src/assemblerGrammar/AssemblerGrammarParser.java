@@ -22,10 +22,11 @@ public class AssemblerGrammarParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, ID=8, FUNC=9, 
 		INT=10, STRING=11, FLOAT=12, WS=13, NEWLINE=14;
 	public static final int
-		RULE_program = 0, RULE_globals = 1, RULE_functionDeclaration = 2, RULE_instr = 3, 
-		RULE_operand = 4, RULE_labelAddress = 5;
+		RULE_program = 0, RULE_globals = 1, RULE_functionDeclaration = 2, RULE_labelAddress = 3, 
+		RULE_instr = 4, RULE_operand = 5;
 	public static final String[] ruleNames = {
-		"program", "globals", "functionDeclaration", "instr", "operand", "labelAddress"
+		"program", "globals", "functionDeclaration", "labelAddress", "instr", 
+		"operand"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -171,44 +172,44 @@ public class AssemblerGrammarParser extends Parser {
 				}
 				break;
 			}
-			setState(33);
+			setState(32);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(23);
+					setState(21); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-					while (_la==NEWLINE) {
+					do {
 						{
 						{
 						setState(20);
 						match(NEWLINE);
 						}
 						}
-						setState(25);
+						setState(23); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-					}
-					setState(29);
+					} while ( _la==NEWLINE );
+					setState(28);
 					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 					case 1:
 						{
-						setState(26);
+						setState(25);
 						functionDeclaration();
 						}
 						break;
 					case 2:
 						{
-						setState(27);
+						setState(26);
 						labelAddress();
 						}
 						break;
 					case 3:
 						{
-						setState(28);
+						setState(27);
 						instr();
 						}
 						break;
@@ -216,25 +217,25 @@ public class AssemblerGrammarParser extends Parser {
 					}
 					} 
 				}
-				setState(35);
+				setState(34);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
-			setState(39);
+			setState(38);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==NEWLINE) {
 				{
 				{
-				setState(36);
+				setState(35);
 				match(NEWLINE);
 				}
 				}
-				setState(41);
+				setState(40);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			checkForUnresolvedReferences();System.out.println("program");
+			checkForUnresolvedReferences();/*System.out.println("end program");*/
 			}
 		}
 		catch (RecognitionException re) {
@@ -276,27 +277,27 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47);
+			setState(46);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==NEWLINE) {
 				{
 				{
-				setState(44);
+				setState(43);
 				match(NEWLINE);
 				}
 				}
-				setState(49);
+				setState(48);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(50);
+			setState(49);
 			match(T__0);
-			setState(51);
+			setState(50);
 			((GlobalsContext)_localctx).INT = match(INT);
-			setState(52);
+			setState(51);
 			match(NEWLINE);
-			setGlobalLength((((GlobalsContext)_localctx).INT!=null?Integer.valueOf(((GlobalsContext)_localctx).INT.getText()):0));System.out.println("global");
+			setGlobalLength((((GlobalsContext)_localctx).INT!=null?Integer.valueOf(((GlobalsContext)_localctx).INT.getText()):0));/*System.out.println("global");*/
 			}
 		}
 		catch (RecognitionException re) {
@@ -339,27 +340,68 @@ public class AssemblerGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(55);
+			setState(54);
 			match(T__1);
-			setState(56);
+			setState(55);
 			((FunctionDeclarationContext)_localctx).name = match(ID);
-			setState(57);
+			setState(56);
 			match(T__2);
-			setState(58);
+			setState(57);
 			match(T__3);
+			setState(58);
+			match(T__4);
 			setState(59);
-			match(T__4);
-			setState(60);
 			((FunctionDeclarationContext)_localctx).a = match(INT);
-			setState(61);
+			setState(60);
 			match(T__5);
-			setState(62);
+			setState(61);
 			match(T__6);
-			setState(63);
+			setState(62);
 			match(T__4);
-			setState(64);
+			setState(63);
 			((FunctionDeclarationContext)_localctx).n = match(INT);
-			defineFunction(((FunctionDeclarationContext)_localctx).name, (((FunctionDeclarationContext)_localctx).a!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).a.getText()):0), (((FunctionDeclarationContext)_localctx).n!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).n.getText()):0)); System.out.println("function "+((FunctionDeclarationContext)_localctx).name);
+			defineFunction(((FunctionDeclarationContext)_localctx).name, (((FunctionDeclarationContext)_localctx).a!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).a.getText()):0), (((FunctionDeclarationContext)_localctx).n!=null?Integer.valueOf(((FunctionDeclarationContext)_localctx).n.getText()):0)); /*System.out.println("function "+((FunctionDeclarationContext)_localctx).name);*/
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class LabelAddressContext extends ParserRuleContext {
+		public Token ID;
+		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
+		public LabelAddressContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_labelAddress; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).enterLabelAddress(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).exitLabelAddress(this);
+		}
+	}
+
+	public final LabelAddressContext labelAddress() throws RecognitionException {
+		LabelAddressContext _localctx = new LabelAddressContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_labelAddress);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(66);
+			((LabelAddressContext)_localctx).ID = match(ID);
+			setState(67);
+			match(T__2);
+			defineAddressLabel(((LabelAddressContext)_localctx).ID);/*System.out.println("label "+ ((LabelAddressContext)_localctx).ID);*/
 			}
 		}
 		catch (RecognitionException re) {
@@ -396,26 +438,26 @@ public class AssemblerGrammarParser extends Parser {
 
 	public final InstrContext instr() throws RecognitionException {
 		InstrContext _localctx = new InstrContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_instr);
+		enterRule(_localctx, 8, RULE_instr);
 		try {
-			setState(73);
+			setState(76);
 			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(67);
+				setState(70);
 				((InstrContext)_localctx).ID = match(ID);
-				setState(68);
+				setState(71);
 				((InstrContext)_localctx).operand = operand();
-				generateInstruction(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));System.out.println("instruction one op "+((InstrContext)_localctx).ID);
+				generateInstruction(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));/*System.out.println("instruction one op "+((InstrContext)_localctx).ID);*/
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(71);
+				setState(74);
 				((InstrContext)_localctx).ID = match(ID);
-				generateInstruction(((InstrContext)_localctx).ID);System.out.println("instruction "+((InstrContext)_localctx).ID);
+				generateInstruction(((InstrContext)_localctx).ID);/*System.out.println("instruction "+((InstrContext)_localctx).ID);*/
 				}
 				break;
 			}
@@ -432,11 +474,11 @@ public class AssemblerGrammarParser extends Parser {
 	}
 
 	public static class OperandContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
 		public TerminalNode FUNC() { return getToken(AssemblerGrammarParser.FUNC, 0); }
-		public TerminalNode INT() { return getToken(AssemblerGrammarParser.INT, 0); }
-		public TerminalNode STRING() { return getToken(AssemblerGrammarParser.STRING, 0); }
+		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
 		public TerminalNode FLOAT() { return getToken(AssemblerGrammarParser.FLOAT, 0); }
+		public TerminalNode STRING() { return getToken(AssemblerGrammarParser.STRING, 0); }
+		public TerminalNode INT() { return getToken(AssemblerGrammarParser.INT, 0); }
 		public OperandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -453,12 +495,12 @@ public class AssemblerGrammarParser extends Parser {
 
 	public final OperandContext operand() throws RecognitionException {
 		OperandContext _localctx = new OperandContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_operand);
+		enterRule(_localctx, 10, RULE_operand);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(75);
+			setState(78);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << FUNC) | (1L << INT) | (1L << STRING) | (1L << FLOAT))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -478,70 +520,28 @@ public class AssemblerGrammarParser extends Parser {
 		return _localctx;
 	}
 
-	public static class LabelAddressContext extends ParserRuleContext {
-		public Token ID;
-		public TerminalNode ID() { return getToken(AssemblerGrammarParser.ID, 0); }
-		public LabelAddressContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_labelAddress; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).enterLabelAddress(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AssemblerGrammarListener ) ((AssemblerGrammarListener)listener).exitLabelAddress(this);
-		}
-	}
-
-	public final LabelAddressContext labelAddress() throws RecognitionException {
-		LabelAddressContext _localctx = new LabelAddressContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_labelAddress);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(77);
-			((LabelAddressContext)_localctx).ID = match(ID);
-			setState(78);
-			match(T__2);
-			defineAddressLabel(((LabelAddressContext)_localctx).ID);System.out.println("label "+ ((LabelAddressContext)_localctx).ID);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20T\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20S\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\5\2\20\n\2\3\2\3\2\3\2\5\2\25\n"+
-		"\2\3\2\7\2\30\n\2\f\2\16\2\33\13\2\3\2\3\2\3\2\5\2 \n\2\7\2\"\n\2\f\2"+
-		"\16\2%\13\2\3\2\7\2(\n\2\f\2\16\2+\13\2\3\2\3\2\3\3\7\3\60\n\3\f\3\16"+
-		"\3\63\13\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\5\5L\n\5\3\6\3\6\3\7\3\7\3\7\3\7\3\7"+
-		"\2\2\b\2\4\6\b\n\f\2\3\3\2\n\16W\2\17\3\2\2\2\4\61\3\2\2\2\69\3\2\2\2"+
-		"\bK\3\2\2\2\nM\3\2\2\2\fO\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\17\20\3"+
-		"\2\2\2\20\24\3\2\2\2\21\25\5\6\4\2\22\25\5\f\7\2\23\25\5\b\5\2\24\21\3"+
-		"\2\2\2\24\22\3\2\2\2\24\23\3\2\2\2\25#\3\2\2\2\26\30\7\20\2\2\27\26\3"+
-		"\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\37\3\2\2\2\33\31\3"+
-		"\2\2\2\34 \5\6\4\2\35 \5\f\7\2\36 \5\b\5\2\37\34\3\2\2\2\37\35\3\2\2\2"+
-		"\37\36\3\2\2\2 \"\3\2\2\2!\31\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$"+
-		")\3\2\2\2%#\3\2\2\2&(\7\20\2\2\'&\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2"+
-		"\2*,\3\2\2\2+)\3\2\2\2,-\b\2\1\2-\3\3\2\2\2.\60\7\20\2\2/.\3\2\2\2\60"+
-		"\63\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\64\3\2\2\2\63\61\3\2\2\2\64\65"+
-		"\7\3\2\2\65\66\7\f\2\2\66\67\7\20\2\2\678\b\3\1\28\5\3\2\2\29:\7\4\2\2"+
-		":;\7\n\2\2;<\7\5\2\2<=\7\6\2\2=>\7\7\2\2>?\7\f\2\2?@\7\b\2\2@A\7\t\2\2"+
-		"AB\7\7\2\2BC\7\f\2\2CD\b\4\1\2D\7\3\2\2\2EF\7\n\2\2FG\5\n\6\2GH\b\5\1"+
-		"\2HL\3\2\2\2IJ\7\n\2\2JL\b\5\1\2KE\3\2\2\2KI\3\2\2\2L\t\3\2\2\2MN\t\2"+
-		"\2\2N\13\3\2\2\2OP\7\n\2\2PQ\7\5\2\2QR\b\7\1\2R\r\3\2\2\2\n\17\24\31\37"+
-		"#)\61K";
+		"\2\3\2\6\2\30\n\2\r\2\16\2\31\3\2\3\2\3\2\5\2\37\n\2\7\2!\n\2\f\2\16\2"+
+		"$\13\2\3\2\7\2\'\n\2\f\2\16\2*\13\2\3\2\3\2\3\3\7\3/\n\3\f\3\16\3\62\13"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6O\n\6\3\7\3\7\3\7\2\2\b\2"+
+		"\4\6\b\n\f\2\3\3\2\n\16V\2\17\3\2\2\2\4\60\3\2\2\2\68\3\2\2\2\bD\3\2\2"+
+		"\2\nN\3\2\2\2\fP\3\2\2\2\16\20\5\4\3\2\17\16\3\2\2\2\17\20\3\2\2\2\20"+
+		"\24\3\2\2\2\21\25\5\6\4\2\22\25\5\b\5\2\23\25\5\n\6\2\24\21\3\2\2\2\24"+
+		"\22\3\2\2\2\24\23\3\2\2\2\25\"\3\2\2\2\26\30\7\20\2\2\27\26\3\2\2\2\30"+
+		"\31\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\36\3\2\2\2\33\37\5\6\4\2\34"+
+		"\37\5\b\5\2\35\37\5\n\6\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37"+
+		"!\3\2\2\2 \27\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#(\3\2\2\2$\"\3\2"+
+		"\2\2%\'\7\20\2\2&%\3\2\2\2\'*\3\2\2\2(&\3\2\2\2()\3\2\2\2)+\3\2\2\2*("+
+		"\3\2\2\2+,\b\2\1\2,\3\3\2\2\2-/\7\20\2\2.-\3\2\2\2/\62\3\2\2\2\60.\3\2"+
+		"\2\2\60\61\3\2\2\2\61\63\3\2\2\2\62\60\3\2\2\2\63\64\7\3\2\2\64\65\7\f"+
+		"\2\2\65\66\7\20\2\2\66\67\b\3\1\2\67\5\3\2\2\289\7\4\2\29:\7\n\2\2:;\7"+
+		"\5\2\2;<\7\6\2\2<=\7\7\2\2=>\7\f\2\2>?\7\b\2\2?@\7\t\2\2@A\7\7\2\2AB\7"+
+		"\f\2\2BC\b\4\1\2C\7\3\2\2\2DE\7\n\2\2EF\7\5\2\2FG\b\5\1\2G\t\3\2\2\2H"+
+		"I\7\n\2\2IJ\5\f\7\2JK\b\6\1\2KO\3\2\2\2LM\7\n\2\2MO\b\6\1\2NH\3\2\2\2"+
+		"NL\3\2\2\2O\13\3\2\2\2PQ\t\2\2\2Q\r\3\2\2\2\n\17\24\31\36\"(\60N";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

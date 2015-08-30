@@ -1,6 +1,14 @@
-.def main: args=0 ,locals=0
+.def main: args=0 ,locals=1
+iconst -10
 loop:
 sconst "Ciao Bello"
 print
-br loop
+iconst 1
+iadd
+store 0
+load 0
+load 0
+iconst 0
+ieq
+brf loop
 halt

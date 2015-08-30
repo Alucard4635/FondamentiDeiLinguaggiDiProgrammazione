@@ -27,43 +27,37 @@ grammar AssemblerGrammar;
 program
     :   globals?
     ( functionDeclaration |labelAddress| instr  )
-   	(NEWLINE*( functionDeclaration |labelAddress| instr))*
+   	(NEWLINE+( functionDeclaration |labelAddress| instr))*
    	NEWLINE*
-        {checkForUnresolvedReferences();System.out.println("program");}
+        {checkForUnresolvedReferences();/*System.out.println("end program");*/}
     ;
-/////////////////////////////////FIXME i try with NEWLINE first
-// how much data space
-// START: data
-globals : NEWLINE* '.globals' INT NEWLINE {setGlobalLength($INT.int);System.out.println("global");} ;
-// END: data
+    
+globals : NEWLINE* '.globals' INT NEWLINE {setGlobalLength($INT.int);/*System.out.println("global");*/} ;
+
 
 //  .def fact: args=1, locals=0
-// START: func
 functionDeclaration
     : '.def' name=ID ':' 'args' '=' a=INT ',' 'locals' '=' n=INT 
-      {defineFunction($name, $a.int, $n.int); System.out.println("function "+$name);}
+      {defineFunction($name, $a.int, $n.int); /*System.out.println("function "+$name);*/}
     ;
-// END: func
 
-// START: instr
-instr
-    :	ID operand              {generateInstruction($ID,$operand.start);System.out.println("instruction one op "+$ID);}
-	|	ID                 {generateInstruction($ID);System.out.println("instruction "+$ID);}
-    ;
-// END: instr
-
-// START: operand
-operand
-    :   ID   // basic code label; E.g., "loop"
-    |   FUNC // function label; E.g., "f()"
-    |   INT
-    |   STRING
-    |   FLOAT
-    ;
 
 labelAddress
-    :   ID ':' {defineAddressLabel($ID);System.out.println("label "+ $ID);}
+    :   ID ':' {defineAddressLabel($ID);/*System.out.println("label "+ $ID);*/}
     ;
+instr
+    :	ID operand              {generateInstruction($ID,$operand.start);/*System.out.println("instruction one op "+$ID);*/}
+	|	ID                 {generateInstruction($ID);/*System.out.println("instruction "+$ID);*/}
+    ;
+
+operand
+    :	FUNC // function label; E.g., "f()"
+    |	ID
+    |   FLOAT
+    |   STRING
+    |   INT
+    ;
+
 
 ID  :   LETTER (LETTER | '0'..'9')* ;
 

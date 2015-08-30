@@ -37,4 +37,9 @@ public class InterpreterException extends Exception {
 		return errorType;
 	};
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return errorType.toString()+" "+lineOfCode+" "+errorCause;
+	}
 }
