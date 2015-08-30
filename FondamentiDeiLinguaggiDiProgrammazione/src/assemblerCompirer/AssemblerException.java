@@ -27,5 +27,9 @@ public class AssemblerException extends RuntimeException {
 	public AssemblerExceptionType getErrorType() {
 		return errorType;
 	};
-
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return errorType+", "+errorCause+", "+lineOfCode;
+	}
 }

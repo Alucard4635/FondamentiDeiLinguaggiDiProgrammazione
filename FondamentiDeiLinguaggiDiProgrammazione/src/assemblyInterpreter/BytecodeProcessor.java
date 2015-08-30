@@ -1,13 +1,6 @@
 package assemblyInterpreter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.swing.JFileChooser;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -15,7 +8,7 @@ import assemblerCompirer.BytecodeGenerator;
 import assemblerGrammar.AssemblerGrammarLexer;
 import assemblyInterpreter.InterpreterException.InterpreterExceptionType;
 
-public class AssemblerProcessor {
+public class BytecodeProcessor {
 
 	private static final int DEFAULT_OPERAND_STACK_SIZE = 1000;
 	private static final int DEFAULT_CALL_STACK_SIZE = 1000;
@@ -34,7 +27,7 @@ public class AssemblerProcessor {
 	private int fp = -1; // Function pointer register
 	private AssemblyFunction mainFunction;
 
-	public AssemblerProcessor() {
+	public BytecodeProcessor() {
 
 	}
 
@@ -89,8 +82,9 @@ public class AssemblerProcessor {
 		ip = fs.getDeclarationAddress(); // branch to function
 	}
 
-	/** Simulate the fetch-execute cycle */
-	protected void executeCode() {
+	/** Simulate the fetch-execute cycle 
+	 * @throws InterpreterException */
+	protected void executeCode() throws InterpreterException {
 		int opI1, opI2;
 		float opF1, opF2;
 		int addressArgoment = 0;
@@ -202,8 +196,8 @@ public class AssemblerProcessor {
 				System.out.println(popOperand());
 				break;
 			default:
-				throw new Error("invalid opcode: " + opcode + " at ip="
-						+ (ip - 1));
+				throw new InterpreterException(InterpreterExceptionType.UNKNOWN_INSTRUCTION,ip,new Short(opcode).toString()) ; 
+				//("invalid opcode: " + opcode + " at ip="+ (ip - 1));
 			}
 			opcode = code[ip];
 		}

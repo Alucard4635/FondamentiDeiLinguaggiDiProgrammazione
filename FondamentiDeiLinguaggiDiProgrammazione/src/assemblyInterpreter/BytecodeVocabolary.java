@@ -45,7 +45,7 @@ public class BytecodeVocabolary {
 			new Instruction("flt"), new Instruction("feq"),
 			new Instruction("itof"), new Instruction("iconst"),
 			new Instruction("sconst"), new Instruction("fconst"),
-			new Instruction("br"), new Instruction("brt") // index is the opcode
+			new Instruction("br"), new Instruction("brt"),new Instruction("brf") // index is the opcode
 	};
 
 	public static int getInt(byte[] memory, int index) {

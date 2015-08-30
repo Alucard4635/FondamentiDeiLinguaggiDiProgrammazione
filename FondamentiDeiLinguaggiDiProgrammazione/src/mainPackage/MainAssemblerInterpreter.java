@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
 
-import assemblyInterpreter.AssemblerProcessor;
+import assemblyInterpreter.BytecodeProcessor;
 
 	public class MainAssemblerInterpreter {
 		public static void main(String[] args) throws Exception {
@@ -29,7 +29,7 @@ import assemblyInterpreter.AssemblerProcessor;
 					input = new FileInputStream(selectedFile);
 	
 				} else if (responce == JFileChooser.ERROR_OPTION) {
-					System.out.println("error while opening JFileChooser");
+					System.err.println("error while opening JFileChooser");
 					System.out.println("Enter File Name: ");
 					BufferedReader bufferedReader = new BufferedReader(
 							new InputStreamReader(System.in));
@@ -41,7 +41,7 @@ import assemblyInterpreter.AssemblerProcessor;
 	
 			}
 	
-			AssemblerProcessor interpreter = new AssemblerProcessor();
+			BytecodeProcessor interpreter = new BytecodeProcessor();
 			interpreter.loadAssemblerCode(input);
 			interpreter.start();
 		}
