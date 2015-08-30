@@ -82,12 +82,11 @@ public class AssemblerGrammarParser extends Parser {
 
 
 	    // Define the functionality required by the parser for code generation
-	    protected void gen(Token instrToken){;}
-	    protected void gen(Token instrToken, Token operandToken){;}
+	    protected void generateInstruction(Token instrToken){;}
+	    protected void generateInstruction(Token instrToken, Token operandToken){;}
 	    protected void checkForUnresolvedReferences(){;}
 	    protected void defineFunction(Token idToken, int nargs, int nlocals){;}
-	    protected void defineDataSize(int n){;}
-	    protected void getLabelAddress(Token idToken){;}
+	    protected void setGlobalLength(int n){;}
 	    protected void defineAddressLabel(Token idToken) {;}
 
 	public AssemblerGrammarParser(TokenStream input) {
@@ -280,7 +279,7 @@ public class AssemblerGrammarParser extends Parser {
 			((GlobalsContext)_localctx).INT = match(INT);
 			setState(45);
 			match(NEWLINE);
-			defineDataSize((((GlobalsContext)_localctx).INT!=null?Integer.valueOf(((GlobalsContext)_localctx).INT.getText()):0));
+			setGlobalLength((((GlobalsContext)_localctx).INT!=null?Integer.valueOf(((GlobalsContext)_localctx).INT.getText()):0));
 			}
 		}
 		catch (RecognitionException re) {
@@ -389,7 +388,7 @@ public class AssemblerGrammarParser extends Parser {
 				{
 				setState(60);
 				((InstrContext)_localctx).ID = match(ID);
-				gen(((InstrContext)_localctx).ID);
+				generateInstruction(((InstrContext)_localctx).ID);
 				}
 				break;
 			case 2:
@@ -399,7 +398,7 @@ public class AssemblerGrammarParser extends Parser {
 				((InstrContext)_localctx).ID = match(ID);
 				setState(63);
 				((InstrContext)_localctx).operand = operand();
-				gen(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));
+				generateInstruction(((InstrContext)_localctx).ID,(((InstrContext)_localctx).operand!=null?(((InstrContext)_localctx).operand.start):null));
 				}
 				break;
 			}

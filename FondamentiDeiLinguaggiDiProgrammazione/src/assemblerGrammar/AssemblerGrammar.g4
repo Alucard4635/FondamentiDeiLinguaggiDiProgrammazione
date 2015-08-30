@@ -15,12 +15,10 @@ grammar AssemblerGrammar;
 // START: members
 @parser::members {
     // Define the functionality required by the parser for code generation
-    protected void gen(Token instrToken){;}
-    protected void gen(Token instrToken, Token operandToken){;}
-    protected void checkForUnresolvedReferences(){;}
+    protected void generateInstruction(Token instrToken){;}
+    protected void generateInstruction(Token instrToken, Token operandToken){;}
     protected void defineFunction(Token idToken, int nargs, int nlocals){;}
-    protected void defineDataSize(int n){;}
-    protected void getLabelAddress(Token idToken){;}
+    protected void setGlobalLength(int n){;}
     protected void defineAddressLabel(Token idToken) {;}
 }
 // END: members
@@ -34,7 +32,7 @@ program
 /////////////////////////////////FIXME i try with NEWLINE first
 // how much data space
 // START: data
-globals : NEWLINE* '.globals' INT NEWLINE {defineDataSize($INT.int);} ;
+globals : NEWLINE* '.globals' INT NEWLINE {setGlobalLength($INT.int);} ;
 // END: data
 
 //  .def fact: args=1, locals=0
@@ -47,8 +45,8 @@ functionDeclaration
 
 // START: instr
 instr
-    :   ID                          {gen($ID);}
-    |   ID operand                  {gen($ID,$operand.start);}
+    :   ID                          {generateInstruction($ID);}
+    |   ID operand                  {generateInstruction($ID,$operand.start);}
     ;
 // END: instr
 
