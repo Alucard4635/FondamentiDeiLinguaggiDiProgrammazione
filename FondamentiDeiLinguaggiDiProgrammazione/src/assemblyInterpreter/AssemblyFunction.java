@@ -42,11 +42,7 @@ public class AssemblyFunction {
 			AssemblyFunction f=(AssemblyFunction) obj;
 			return name.equals(f.name)
 					&& localVariablesNumber==f.localVariablesNumber
-					&& argumentNumber==f.argumentNumber
-					&& declarationAddress==f.declarationAddress;
-		}else if (obj instanceof String) {
-			String s=(String) obj;
-			return name.equals(s);
+					&& argumentNumber==f.argumentNumber;
 		}
 		return super.equals(obj);
 	}

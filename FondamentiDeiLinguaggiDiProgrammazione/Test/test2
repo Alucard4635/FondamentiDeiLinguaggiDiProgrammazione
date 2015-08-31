@@ -8,6 +8,7 @@ load 0
 loop:
 sconst "loop"
 print
+load 0
 iconst 1
 iadd
 store 0

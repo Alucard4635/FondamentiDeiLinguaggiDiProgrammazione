@@ -72,8 +72,14 @@ public class BytecodeProcessor {
 		return word;
 	}
 
-	protected void call(int functionConstPoolIndex) {
-		AssemblyFunction fs = (AssemblyFunction) constPool[functionConstPoolIndex];
+	protected void call(int functionConstPoolIndex) throws InterpreterException {
+
+		Object functionObject = constPool[functionConstPoolIndex];
+		if (!(functionObject instanceof AssemblyFunction)) {
+			throw new InterpreterException(InterpreterExceptionType.UNDEFINED, ip, functionObject.toString());
+		}
+		AssemblyFunction fs = (AssemblyFunction) functionObject;
+
 		FunctionRecord f = new FunctionRecord(fs, ip);
 		calls[++fp] = f; // push new stack frame for parameters and locals
 		// move args from operand stack to top frame on call stack
@@ -216,14 +222,28 @@ public class BytecodeProcessor {
 	}
 
 	private void pushOperand(Object op) {
-		operands[++sp] = op;
+		try {
+			operands[++sp] = op;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			new InterpreterException(InterpreterExceptionType.OUT_OF_MEMORY, ip, "Adding Operand");
+		}
 	}
 
 	private Object topOperand() {
-		return operands[sp];
+		try {
+			return operands[sp];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Look on top");
+		}
+		return null;
 	}
 
 	private Object popOperand() {
+		try {
 		return operands[sp--];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Look on top");
+		}
+		return null;
 	}
 }

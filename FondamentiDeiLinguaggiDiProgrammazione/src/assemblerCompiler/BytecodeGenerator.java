@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
-import org.stringtemplate.v4.compiler.STParser.ifstat_return;
 
 import assemblerCompiler.AssemblerException.AssemblerExceptionType;
 import assemblerGrammar.AssemblerGrammarParser;
@@ -16,7 +15,7 @@ import assemblyInterpreter.BytecodeVocabolary;
 import assemblyInterpreter.Instruction;
 
 public class BytecodeGenerator extends AssemblerGrammarParser {
-	private static final boolean DEBUG=false;
+	private static final boolean DEBUG=true;
 	private static final int INITIAL_CODE_SIZE = 2048;
 	protected Map<String, Integer> instructionOpcodeMapping = new HashMap<String, Integer>();
 	protected Map<String, Tag> labels = new HashMap<String, Tag>();// label
@@ -71,7 +70,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	@Override
 	protected void generateInstruction(Token instrToken) {
 		if (DEBUG) {
-			System.out.println("genereting: "+instrToken);
+			System.out.println("genereting instruction: "+instrToken);
 		}
 		String instrName = instrToken.getText();
 		Integer opcodeI = instructionOpcodeMapping.get(instrName);
@@ -90,30 +89,29 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	
 
 	protected void generateOperand(Token operandToken) {
-		
 		String text = operandToken.getText();
-		int v = 0;
+		int value = 0;
 		switch (operandToken.getType()) { // switch on token type
 		case INT:
-			v = Integer.valueOf(text);
+			value = Integer.valueOf(text);
 			break;
 		case FLOAT:
-			v = getConstantPoolIndex(Float.valueOf(text));
+			value = getIndexOrAdd(Float.valueOf(text));
 			break;
 		case STRING:
-			v = getConstantPoolIndex(text);
+			value = getIndexOrAdd(text);
 			break;
 		case ID:
-			v = getLabelAddress(text);
+			value = getLabelAddress(text);
 			break;
 		case FUNC:
-			v = getFunctionIndex(text);
+			value = getFunctionIndex(text);
 			break;
 		}
 		if (DEBUG) {
-			System.out.println("genereting: "+operandToken+" and is "+v);
+			System.out.println("genereting operand: "+operandToken+" and is "+value);
 		}
-		BytecodeVocabolary.writeInt(code, v); // write operand to code byte
+		BytecodeVocabolary.writeInt(code, value); // write operand to code byte
 	}
 
 	protected void checkForUnresolvedReferences() {
@@ -135,17 +133,40 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		String name = idToken.getText();
 		AssemblyFunction f = new AssemblyFunction(name, args, locals,
 				code.size());
-		if (name.equals("main")){
-			setMainFunction(f);
+		int index=getIndexOrAdd(f);
+		if (index<constPool.size()-1){
+			if (DEBUG) {
+				System.out.println("Found "+name+" at costant pool index "+index+ " already declared ");
+			}
+			throw new AssemblerException(AssemblerExceptionType.AlRADY_DEFINED, idToken.getLine(), f.getName());
 		}
-		if (constPool.contains(f)){
-			constPool.set(constPool.indexOf(f), f);
-		}else{
-			getConstantPoolIndex(f);
+		resolveFunctionReference(f);
+		if (name.equals("main")){
+			if (DEBUG) {
+				System.out.println("Set Main Function");
+			}
+			setMainFunction(f);
 		}
 	}
 
-	protected int getConstantPoolIndex(Object o) {
+	private void resolveFunctionReference(AssemblyFunction f) {
+		String functionReference;
+		Object object;
+		for (int i = 0; i < constPool.size(); i++) {
+			object = constPool.get(i);
+			if (object instanceof String) {
+				functionReference = (String) object;
+				if (functionReference.equals(f.getName()+"()")) {
+					if (DEBUG) {
+						System.out.println("Found reference: "+functionReference+" replacing");
+					}
+					constPool.set(i, f);
+				}
+			}
+		}
+	}
+
+	protected int getIndexOrAdd(Object o) {
 		int indexOf = constPool.indexOf(o);
 		if (indexOf>0) {
 			return indexOf;
@@ -163,7 +184,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		if (i >= 0){
 			return i;
 		}
-		return getConstantPoolIndex(id);
+		return getIndexOrAdd(id);
 	}
 	protected int getLabelAddress(String label) {
 		if (DEBUG) {
@@ -183,7 +204,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			}
 		}
 		if (DEBUG) {
-			System.out.println("not Found: "+label);
+			System.out.println("not Found: "+label+" placing -1 at "+ code.size());
 		}
 		return -1; 
 	}
@@ -191,7 +212,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	@Override
     protected void defineAddressLabel(Token idToken) {
 		if (DEBUG) {
-			System.out.println("defining: "+idToken);
+			System.out.println("defining Label: "+idToken);
 		}
         String label = idToken.getText();
         Tag foundTag = (Tag)labels.get(label);
@@ -213,17 +234,29 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 
 	private void resolveReference(LinkedList<Integer> forwardReferedAddress,
 			int definitionAddress) {
+		if (DEBUG) {
+			System.out.println("resolving Reference: ");
+		}
 		Integer poppedAddress;
 		while (!forwardReferedAddress.isEmpty()) {
 			poppedAddress = forwardReferedAddress.pop();
+			if (DEBUG) {
+				System.out.println("resolving Reference at: "+poppedAddress);
+				System.out.println("repleasing byte: "+code.get(poppedAddress)+code.get(poppedAddress+1)+code.get(poppedAddress+2)+code.get(poppedAddress+3));
+			}
 			Byte byteToSet = (new Byte((byte) ((definitionAddress >> (8 * 3)) & 0xFF))); //first byte
 			code.set(poppedAddress++, byteToSet);
+			
 			byteToSet = new Byte((byte) ((definitionAddress >> (8 * 2)) & 0xFF));//second one
 			code.set(poppedAddress++, byteToSet);
+
 			byteToSet = new Byte((byte) ((definitionAddress >> (8 * 1)) & 0xFF));
 			code.set(poppedAddress++, byteToSet);
+
 			byteToSet = new Byte((byte) (definitionAddress & 0xFF));
 			code.set(poppedAddress, byteToSet);
+
+			
 		}
 	}
 
@@ -234,4 +267,12 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	public void setMainFunction(AssemblyFunction main) {
 		mainFunction = main;
 	}
+	public static int getInt(byte[] memory, int index) {
+        int b1 = memory[index++]&0xFF; // mask off sign-extended bits
+        int b2 = memory[index++]&0xFF;
+        int b3 = memory[index++]&0xFF;
+        int b4 = memory[index++]&0xFF;
+        int word = b1<<(8*3) | b2<<(8*2) | b3<<(8*1) | b4;
+        return word;
+    }
 }
