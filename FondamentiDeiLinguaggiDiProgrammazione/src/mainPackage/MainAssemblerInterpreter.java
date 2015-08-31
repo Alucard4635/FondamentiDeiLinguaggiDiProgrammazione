@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
+import assemblerCompiler.AssemblerException;
 import assemblyInterpreter.BytecodeProcessor;
+import assemblyInterpreter.InterpreterException;
 
 	public class MainAssemblerInterpreter {
 		public static void main(String[] args) throws Exception {
@@ -42,7 +45,41 @@ import assemblyInterpreter.BytecodeProcessor;
 			}
 	
 			BytecodeProcessor interpreter = new BytecodeProcessor();
-			interpreter.loadAssemblerCode(input);
-			interpreter.start();
+			try {
+				interpreter.loadAssemblerCode(input);
+				interpreter.start();
+			} catch (Exception e) {
+				showError(e);
+			}
+		}
+
+		private static void showError(Exception e) throws Exception {
+			if (e instanceof AssemblerException) {
+				AssemblerException assemblerExc=(AssemblerException) e;
+				showError(assemblerExc);
+			}else if (e instanceof InterpreterException) {
+				InterpreterException interpreterExc=(InterpreterException) e;
+				showError(interpreterExc);
+			}else {
+				throw e;
+			}
+		}
+
+		private static void showError(InterpreterException interpreterExc) {
+			String title = interpreterExc.getErrorTitle();
+			String message = interpreterExc.getErrorMessage();
+			
+			showErrorMessage(title, message);
+		}
+
+		private static void showErrorMessage(String title, String message) {
+			JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+		}
+
+		private static void showError(AssemblerException e) {
+			String title = e.getErrorTitle();
+			String message = e.getErrorMessage();
+			
+			showErrorMessage(title, message);
 		}
 	}

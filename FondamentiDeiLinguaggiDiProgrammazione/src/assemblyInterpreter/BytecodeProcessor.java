@@ -1,10 +1,11 @@
 package assemblyInterpreter;
 
 import java.io.InputStream;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import assemblerCompirer.BytecodeGenerator;
+import assemblerCompiler.BytecodeGenerator;
 import assemblerGrammar.AssemblerGrammarLexer;
 import assemblyInterpreter.InterpreterException.InterpreterExceptionType;
 

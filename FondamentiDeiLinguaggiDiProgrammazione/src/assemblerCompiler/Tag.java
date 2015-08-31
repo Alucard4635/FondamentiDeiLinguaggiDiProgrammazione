@@ -1,4 +1,4 @@
-package assemblerCompirer;
+package assemblerCompiler;
 
 import java.util.LinkedList;
 

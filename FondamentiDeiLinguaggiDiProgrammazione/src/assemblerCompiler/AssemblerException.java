@@ -1,28 +1,21 @@
-package assemblyInterpreter;
-
+package assemblerCompiler;
 
 @SuppressWarnings("serial")
-public class InterpreterException extends Exception {
-	public enum InterpreterExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED, NO_MAIN}
+public class AssemblerException extends RuntimeException {
+	public enum AssemblerExceptionType {
+		UNKNOWN_INSTRUCTION, UNDEFINED, AlRADY_DEFINED}
 
-	private int lineOfCode=-1;
+	private int lineOfCode;
 	private String errorCause;
-	private InterpreterExceptionType errorType;
+	private AssemblerExceptionType errorType;
 
-	public InterpreterException(InterpreterExceptionType type,
+	public AssemblerException(AssemblerExceptionType type,
 			int line, String cause) {
 				errorType = type;
 				lineOfCode = line;
 				errorCause = cause;
 	}
 
-	public InterpreterException(InterpreterExceptionType noMain) {
-		errorType = noMain;
-	}
-
-	public enum AssemblerExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED}
 
 	public int getLineOfCode() {
 		return lineOfCode;
@@ -32,15 +25,15 @@ public class InterpreterException extends Exception {
 		return errorCause;
 	}
 
-	public InterpreterExceptionType getErrorType() {
+	public AssemblerExceptionType getErrorType() {
 		return errorType;
 	};
-
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return errorType.toString()+" "+lineOfCode+" "+errorCause;
+		return errorType+", "+errorCause+", "+lineOfCode;
 	}
+
 
 	public String getErrorTitle() {
 		String errorTitle;
@@ -51,8 +44,8 @@ public class InterpreterException extends Exception {
 		case UNDEFINED:
 			errorTitle="Undefine: "+errorCause;
 			break;
-		case NO_MAIN:
-			errorTitle="Main Not Found";
+		case AlRADY_DEFINED:
+			errorTitle="Already Defined";
 			break;
 
 		default:
@@ -71,8 +64,8 @@ public class InterpreterException extends Exception {
 		case UNDEFINED:
 			errorMessage="Undefined ";
 			break;
-		case NO_MAIN:
-			errorMessage="Main Not Found";
+		case AlRADY_DEFINED:
+			errorMessage="Already Defined";
 			break;
 
 		default:
@@ -83,8 +76,9 @@ public class InterpreterException extends Exception {
 			errorMessage+="Cause: "+errorCause;
 		}
 		if (lineOfCode>=0) {
-			errorMessage+=" at byte "+ lineOfCode;
+			errorMessage+=" at line "+ lineOfCode;
 		}
 		return errorMessage;
 	}
+
 }

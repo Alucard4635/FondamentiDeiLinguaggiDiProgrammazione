@@ -1,19 +1,16 @@
 package assemblyInterpreter;
 
 public class Instruction {
-	private String name; // E.g., "iadd", "call"
-	private int[] type = new int[1];
-	private int n = 0;
+	private String name; 
+	private int operandType = 0;
 
 	public Instruction(String name) {
 		this(name, 0);
-		n = 0;
 	}
 
-	public Instruction(String name, int a) {
+	public Instruction(String name, int type) {
 		this.name = name;
-		type[0] = a;
-		n = 1;
+		this.operandType = type;
 	}
 
 	public String getName() {
@@ -21,6 +18,14 @@ public class Instruction {
 	}
 	public String getNameLowerCase() {
 		return name.toLowerCase();
+	}
+
+	public int getType() {
+		return operandType;
+	}
+
+	public void setType(int type) {
+		this.operandType = type;
 	}
 
 

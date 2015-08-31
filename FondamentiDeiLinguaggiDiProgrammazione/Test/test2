@@ -2,19 +2,25 @@
 .def main: args=0 ,locals=1
 iconst 0
 gstore 0
-loop:
 iconst -9
 store 0
 load 0
-brt somma
-load 0
+loop:
+sconst "loop"
+print
 iconst 1
 iadd
 store 0
 load 0
-brf loop
+iconst 0
+ieq
+brf somma
+sconst "Fine"
+print
 halt
 somma: 
+sconst "somma"
+print
 gload 0
 iconst 1
 iadd
