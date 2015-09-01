@@ -1,15 +1,25 @@
 package assemblyInterpreter;
 
 public class FunctionRecord {
-	private AssemblyFunction function; 
-    private int returnAddress;  
-    private Object[] localsVariables; 
-    
-    public FunctionRecord(AssemblyFunction f, int returnAddress) {
-        function = f;
-        this.returnAddress = returnAddress;
-        localsVariables = new Object[f.getArgumentNumber()+f.getLocalVariablesNumber()];
-    }
+	private AssemblyFunction function;
+	private int returnAddress;
+	private Object[] localsVariables;
+	// private Object[] returnOperand;
+	private int sp;
+
+	/*
+	 * public FunctionRecord(AssemblyFunction f, int returnAddress, Object[]
+	 * returnOperand, int sp) { function = f; this.returnAddress =
+	 * returnAddress; this.sp = sp; this.setReturnOperand(returnOperand);
+	 * localsVariables = new Object[f.getLocalVariablesNumber()]; }
+	 */
+
+	public FunctionRecord(AssemblyFunction fs, int ip, int stackLimitMin) {
+		function = fs;
+		this.returnAddress = ip;
+		this.sp = stackLimitMin;
+		localsVariables = new Object[fs.getLocalVariablesNumber()];
+	}
 
 	public AssemblyFunction getFunction() {
 		return function;
@@ -34,4 +44,21 @@ public class FunctionRecord {
 	public void setLocalsVariables(Object[] localsVariables) {
 		this.localsVariables = localsVariables;
 	}
+
+	/*public Object[] getReturnOperand() {
+		return returnOperand;
+	}
+
+	public void setReturnOperand(Object[] returnOperand) {
+		this.returnOperand = returnOperand;
+	}*/
+
+	public int getSp() {
+		return sp;
+	}
+
+	public void setSp(int sp) {
+		this.sp = sp;
+	}
+
 }

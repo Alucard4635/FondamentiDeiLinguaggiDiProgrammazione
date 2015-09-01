@@ -60,7 +60,7 @@ public class BytecodeProcessor {
 		if (mainFunction == null) {
 			throw new InterpreterException(InterpreterExceptionType.NO_MAIN);
 		}
-		FunctionRecord f = new FunctionRecord(mainFunction, -1);
+		FunctionRecord f = new FunctionRecord(mainFunction, -1,0);
 		calls[++fp] = f;
 		ip = mainFunction.getDeclarationAddress();
 		executeCode();
@@ -73,21 +73,51 @@ public class BytecodeProcessor {
 	}
 
 	protected void call(int functionConstPoolIndex) throws InterpreterException {
-
 		Object functionObject = constPool[functionConstPoolIndex];
 		if (!(functionObject instanceof AssemblyFunction)) {
 			throw new InterpreterException(InterpreterExceptionType.UNDEFINED, ip, functionObject.toString());
 		}
 		AssemblyFunction fs = (AssemblyFunction) functionObject;
-
-		FunctionRecord f = new FunctionRecord(fs, ip);
-		calls[++fp] = f; // push new stack frame for parameters and locals
-		// move args from operand stack to top frame on call stack
-		for (int a = fs.getArgumentNumber() - 1; a >= 0; a--) {
-			f.getLocalsVariables()[a] = popOperand();
-		}
+		System.out.println("Call "+fs.getName()+" From "+ip+" new ip "+fs.getDeclarationAddress());//FIXME
+		int argumentNumber = fs.getArgumentNumber();
+		FunctionRecord f = new FunctionRecord(fs, ip, sp-argumentNumber);
+		calls[++fp] = f; // push new function record for parameters and locals
 		ip = fs.getDeclarationAddress(); // branch to function
+		sp=argumentNumber-1;
+
 	}
+	/*	Object[] arguments = getArguments(argumentNumber);
+		
+		Object[] stackContent = getContent(argumentNumber);
+		
+		setOnStack(arguments);//set only arguments on stack
+		
+		FunctionRecord f = new FunctionRecord(fs, ip, stackContent,sp);*/
+
+	/*private void setOnStack(Object[] arguments) {
+		for (int a = sp; a >= 0; a--) {
+			operands[a]=null;
+			if(a<=arguments.length){
+				operands[a]=arguments[a];
+			}
+		}
+	}
+
+	private Object[] getContent(int argumentNumber) {
+		Object[] stackContent = new Object[sp+1-argumentNumber];//copy stack content
+		for (int a = sp-argumentNumber; a >= 0; a--) {
+			stackContent[a] = operands[a];
+		}
+		return stackContent;
+	}
+
+	private Object[] getArguments(int argumentNumber) {
+		Object[] arguments = new Object[argumentNumber];//copy stack's argument content
+		for (int a = argumentNumber-1; a >= 0; a--) {
+			arguments[a] = operands[sp+a-argumentNumber];
+		}
+		return arguments;
+	}*/
 
 	/** Simulate the fetch-execute cycle 
 	 * @throws InterpreterException */
@@ -169,8 +199,7 @@ public class BytecodeProcessor {
 				call(funcIndexInConstPool);
 				break;
 			case BytecodeVocabolary.RET: 
-				FunctionRecord fr = calls[fp--]; 
-				ip = fr.getReturnAddress(); 
+				returnFromCall();
 				break;
 			case BytecodeVocabolary.BR:
 				ip = getIntOperand();
@@ -193,7 +222,7 @@ public class BytecodeProcessor {
 				int constPoolIndex = getIntOperand();
 				pushOperand(constPool[constPoolIndex]);
 				break;
-			case BytecodeVocabolary.LOAD: // load from call stack
+			case BytecodeVocabolary.LOAD: // load from local stack
 				addressArgoment = getIntOperand();
 				pushOperand(calls[fp].getLocalsVariables()[addressArgoment]);
 				break;
@@ -214,36 +243,43 @@ public class BytecodeProcessor {
 				break;
 			default:
 				throw new InterpreterException(InterpreterExceptionType.UNKNOWN_INSTRUCTION,ip,new Short(opcode).toString()) ; 
-				//("invalid opcode: " + opcode + " at ip="+ (ip - 1));
 			}
 			opcode = code[ip];
 		}
 
 	}
 
-	private void pushOperand(Object op) {
+	private void returnFromCall() {
+		FunctionRecord fr = calls[fp--];
+		System.out.println("returningFrom "+fr.getFunction().getName()+" new ip "+fr.getReturnAddress());//FIXME
+		ip = fr.getReturnAddress(); 
+	}
+
+
+	private void pushOperand(Object op) throws InterpreterException {
 		try {
 			operands[++sp] = op;
 		} catch (ArrayIndexOutOfBoundsException e) {
-			new InterpreterException(InterpreterExceptionType.OUT_OF_MEMORY, ip, "Adding Operand");
+			throw new InterpreterException(InterpreterExceptionType.OUT_OF_MEMORY, ip, "Adding Operand");
 		}
 	}
 
-	private Object topOperand() {
+	private Object topOperand() throws InterpreterException {
 		try {
 			return operands[sp];
 		} catch (ArrayIndexOutOfBoundsException e) {
-			new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Look on top");
+			throw new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Look on top");
 		}
-		return null;
 	}
 
-	private Object popOperand() {
+	private Object popOperand() throws InterpreterException {
 		try {
-		return operands[sp--];
+			if(sp<calls[fp].getSp()){
+				throw new InterpreterException(InterpreterExceptionType.UNACCESSIBILE_STACK_ELEMENT, ip, "Pop On Stack");//TODO deassembly operand for cause
+			}
+			return operands[sp--];
 		} catch (ArrayIndexOutOfBoundsException e) {
-			new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Look on top");
+			throw new InterpreterException(InterpreterExceptionType.NO_ELEMENT_ON_STACK, ip, "Pop On Stack");
 		}
-		return null;
 	}
 }

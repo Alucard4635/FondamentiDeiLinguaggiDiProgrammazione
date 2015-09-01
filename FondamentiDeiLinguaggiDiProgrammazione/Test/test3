@@ -5,6 +5,7 @@ call metti123SulloStack()
 call doppiaSomma()
 call stampa()
 call fine()
+halt
 .def stampa: args= 1 , locals=0
 print
 ret
@@ -20,4 +21,4 @@ ret
 .def fine: args= 0 ,locals=0
 sconst "Fine"
 print 
-halt
+ret

@@ -4,7 +4,7 @@ package assemblyInterpreter;
 @SuppressWarnings("serial")
 public class InterpreterException extends Exception {
 	public enum InterpreterExceptionType {
-		UNKNOWN_INSTRUCTION, UNDEFINED, NO_MAIN, OUT_OF_MEMORY, NO_ELEMENT_ON_STACK}
+		UNKNOWN_INSTRUCTION, UNDEFINED, NO_MAIN, OUT_OF_MEMORY, NO_ELEMENT_ON_STACK, UNACCESSIBILE_STACK_ELEMENT}
 
 	private int lineOfCode=-1;
 	private String errorCause;
@@ -61,7 +61,9 @@ public class InterpreterException extends Exception {
 		case NO_ELEMENT_ON_STACK:
 			errorTitle="No Element on stack";
 			break;
-			
+		case UNACCESSIBILE_STACK_ELEMENT:
+			errorTitle="Element Unaccessible By This Function";
+			break;
 		default:
 			errorTitle="General Error";
 			break;
@@ -87,7 +89,9 @@ public class InterpreterException extends Exception {
 		case NO_ELEMENT_ON_STACK:
 			errorMessage="No element on stack";
 			break;
-			
+		case UNACCESSIBILE_STACK_ELEMENT:
+			errorMessage="Element Unaccessible By This Function";
+			break;
 		default:
 			errorMessage="General Error";
 			break;
