@@ -26,7 +26,7 @@ public class BytecodeProcessor {
 	/** Stack of stack frames, grows upwards */
 	private FunctionRecord[] calls = new FunctionRecord[DEFAULT_CALL_STACK_SIZE];
 	private int fp = -1; // Function pointer register
-	private AssemblyFunction mainFunction;
+	private InterpreterFunction mainFunction;
 
 	public BytecodeProcessor() {
 
@@ -74,10 +74,10 @@ public class BytecodeProcessor {
 
 	protected void call(int functionConstPoolIndex) throws InterpreterException {
 		Object functionObject = constPool[functionConstPoolIndex];
-		if (!(functionObject instanceof AssemblyFunction)) {
+		if (!(functionObject instanceof InterpreterFunction)) {
 			throw new InterpreterException(InterpreterExceptionType.UNDEFINED, ip, functionObject.toString());
 		}
-		AssemblyFunction fs = (AssemblyFunction) functionObject;
+		InterpreterFunction fs = (InterpreterFunction) functionObject;
 		System.out.println("Call "+fs.getName()+" From "+ip+" new ip "+fs.getDeclarationAddress());//FIXME
 		int argumentNumber = fs.getArgumentNumber();
 		FunctionRecord f = new FunctionRecord(fs, ip, sp-argumentNumber);

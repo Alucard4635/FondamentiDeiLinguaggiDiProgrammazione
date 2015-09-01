@@ -1,7 +1,7 @@
 package assemblyInterpreter;
 
 public class FunctionRecord {
-	private AssemblyFunction function;
+	private InterpreterFunction function;
 	private int returnAddress;
 	private Object[] localsVariables;
 	// private Object[] returnOperand;
@@ -14,18 +14,18 @@ public class FunctionRecord {
 	 * localsVariables = new Object[f.getLocalVariablesNumber()]; }
 	 */
 
-	public FunctionRecord(AssemblyFunction fs, int ip, int stackLimitMin) {
+	public FunctionRecord(InterpreterFunction fs, int ip, int stackLimitMin) {
 		function = fs;
 		this.returnAddress = ip;
 		this.sp = stackLimitMin;
 		localsVariables = new Object[fs.getLocalVariablesNumber()];
 	}
 
-	public AssemblyFunction getFunction() {
+	public InterpreterFunction getFunction() {
 		return function;
 	}
 
-	public void setFunction(AssemblyFunction function) {
+	public void setFunction(InterpreterFunction function) {
 		this.function = function;
 	}
 

@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.TokenStream;
 
 import assemblerCompiler.AssemblerException.AssemblerExceptionType;
 import assemblerGrammar.AssemblerGrammarParser;
-import assemblyInterpreter.AssemblyFunction;
+import assemblyInterpreter.InterpreterFunction;
 import assemblyInterpreter.BytecodeVocabolary;
 import assemblyInterpreter.Instruction;
 
@@ -28,7 +28,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 	private ArrayList<Byte> code = new ArrayList<Byte>(INITIAL_CODE_SIZE); // code
 																			// memory
 	private int globalLength; // set via .globals
-	private AssemblyFunction mainFunction;
+	private InterpreterFunction mainFunction;
 
 	public BytecodeGenerator(TokenStream input) {
 		super(input);
@@ -131,7 +131,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 			System.out.println("defineFunction: "+idToken+" A"+args+" L"+locals);
 		}
 		String name = idToken.getText();
-		AssemblyFunction f = new AssemblyFunction(name, args, locals,
+		InterpreterFunction f = new InterpreterFunction(name, args, locals,
 				code.size());
 		int index=getIndexOrAdd(f);
 		if (index<constPool.size()-1){
@@ -149,7 +149,7 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		}
 	}
 
-	private void resolveFunctionReference(AssemblyFunction f) {
+	private void resolveFunctionReference(InterpreterFunction f) {
 		String functionReference;
 		Object object;
 		for (int i = 0; i < constPool.size(); i++) {
@@ -260,11 +260,11 @@ public class BytecodeGenerator extends AssemblerGrammarParser {
 		}
 	}
 
-	public AssemblyFunction getMainFunction() {
+	public InterpreterFunction getMainFunction() {
 		return mainFunction;
 	}
 
-	public void setMainFunction(AssemblyFunction main) {
+	public void setMainFunction(InterpreterFunction main) {
 		mainFunction = main;
 	}
 	public static int getInt(byte[] memory, int index) {
