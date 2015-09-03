@@ -880,6 +880,7 @@ public class PieGrammarParser extends Parser {
 		}
 	}
 	public static class ExprIntContext extends ExprContext {
+		public Token INT;
 		public TerminalNode INT() { return getToken(PieGrammarParser.INT, 0); }
 		public ExprIntContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
@@ -938,7 +939,7 @@ public class PieGrammarParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(127);
+			setState(128);
 			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				{
@@ -976,7 +977,8 @@ public class PieGrammarParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(121);
-				match(INT);
+				((ExprIntContext)_localctx).INT = match(INT);
+				System.out.println("iconst " +((ExprIntContext)_localctx).INT.getText());
 				}
 				break;
 			case 5:
@@ -984,7 +986,7 @@ public class PieGrammarParser extends Parser {
 				_localctx = new ExprStringContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(122);
+				setState(123);
 				match(STRING);
 				}
 				break;
@@ -993,17 +995,17 @@ public class PieGrammarParser extends Parser {
 				_localctx = new ExprParensContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(123);
-				match(T__5);
 				setState(124);
-				expr(0);
+				match(T__5);
 				setState(125);
+				expr(0);
+				setState(126);
 				match(T__6);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(140);
+			setState(141);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1011,15 +1013,15 @@ public class PieGrammarParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(138);
+					setState(139);
 					switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 					case 1:
 						{
 						_localctx = new ExprMultContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(129);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(130);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(131);
 						((ExprMultContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__16 || _la==T__17) ) {
@@ -1027,7 +1029,7 @@ public class PieGrammarParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(131);
+						setState(132);
 						expr(7);
 						}
 						break;
@@ -1035,9 +1037,9 @@ public class PieGrammarParser extends Parser {
 						{
 						_localctx = new ExprAddContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(132);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(133);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(134);
 						((ExprAddContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__18 || _la==T__19) ) {
@@ -1045,7 +1047,7 @@ public class PieGrammarParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(134);
+						setState(135);
 						expr(6);
 						}
 						break;
@@ -1053,9 +1055,9 @@ public class PieGrammarParser extends Parser {
 						{
 						_localctx = new ExprConditionContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(135);
-						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(136);
+						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+						setState(137);
 						((ExprConditionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__20 || _la==T__21) ) {
@@ -1063,14 +1065,14 @@ public class PieGrammarParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(137);
+						setState(138);
 						expr(2);
 						}
 						break;
 					}
 					} 
 				}
-				setState(142);
+				setState(143);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
 			}
@@ -1113,23 +1115,23 @@ public class PieGrammarParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(143);
+			setState(144);
 			match(ID);
-			setState(148);
+			setState(149);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(144);
-					match(T__8);
 					setState(145);
+					match(T__8);
+					setState(146);
 					match(ID);
 					}
 					} 
 				}
-				setState(150);
+				setState(151);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			}
@@ -1166,7 +1168,7 @@ public class PieGrammarParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3 \u009a\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3 \u009b\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2"+
 		"\6\2\27\n\2\r\2\16\2\30\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3#\n\3\f\3\16"+
 		"\3&\13\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4\61\n\4\f\4\16\4\64\13"+
@@ -1174,42 +1176,42 @@ public class PieGrammarParser extends Parser {
 		"\6\3\6\3\6\5\6H\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
 		"\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7]\n\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5"+
 		"\7g\n\7\3\b\3\b\3\b\3\b\3\b\7\bn\n\b\f\b\16\bq\13\b\5\bs\n\b\3\b\3\b\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u0082\n\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\7\t\u008d\n\t\f\t\16\t\u0090\13\t\3\n\3\n\3\n\7"+
-		"\n\u0095\n\n\f\n\16\n\u0098\13\n\3\n\2\3\20\13\2\4\6\b\n\f\16\20\22\2"+
-		"\5\3\2\23\24\3\2\25\26\3\2\27\30\u00aa\2\26\3\2\2\2\4\34\3\2\2\2\6*\3"+
-		"\2\2\2\b:\3\2\2\2\nG\3\2\2\2\ff\3\2\2\2\16h\3\2\2\2\20\u0081\3\2\2\2\22"+
-		"\u0091\3\2\2\2\24\27\5\6\4\2\25\27\5\f\7\2\26\24\3\2\2\2\26\25\3\2\2\2"+
-		"\27\30\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\32\3\2\2\2\32\33\7\2\2\3"+
-		"\33\3\3\2\2\2\34\35\7\3\2\2\35\36\7\32\2\2\36\37\7\4\2\2\37$\5\b\5\2 "+
-		"!\7\5\2\2!#\5\b\5\2\" \3\2\2\2#&\3\2\2\2$\"\3\2\2\2$%\3\2\2\2%\'\3\2\2"+
-		"\2&$\3\2\2\2\'(\7\6\2\2()\7\31\2\2)\5\3\2\2\2*+\7\7\2\2+,\7\32\2\2,\65"+
-		"\7\b\2\2-\62\5\b\5\2./\7\5\2\2/\61\5\b\5\2\60.\3\2\2\2\61\64\3\2\2\2\62"+
-		"\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65-\3\2\2\2\65\66"+
-		"\3\2\2\2\66\67\3\2\2\2\678\7\t\2\289\5\n\6\29\7\3\2\2\2:;\7\32\2\2;\t"+
-		"\3\2\2\2<=\7\n\2\2=?\7\31\2\2>@\5\f\7\2?>\3\2\2\2@A\3\2\2\2A?\3\2\2\2"+
-		"AB\3\2\2\2BC\3\2\2\2CD\7\13\2\2DE\7\31\2\2EH\3\2\2\2FH\5\f\7\2G<\3\2\2"+
-		"\2GF\3\2\2\2H\13\3\2\2\2Ig\5\4\3\2JK\5\22\n\2KL\7\f\2\2LM\5\20\t\2MN\7"+
-		"\31\2\2Ng\3\2\2\2OP\7\r\2\2PQ\5\20\t\2QR\7\31\2\2Rg\3\2\2\2ST\7\16\2\2"+
-		"TU\5\20\t\2UV\7\31\2\2Vg\3\2\2\2WX\7\17\2\2XY\5\20\t\2Y\\\5\n\6\2Z[\7"+
-		"\20\2\2[]\5\n\6\2\\Z\3\2\2\2\\]\3\2\2\2]g\3\2\2\2^_\7\21\2\2_`\5\20\t"+
-		"\2`a\5\n\6\2ag\3\2\2\2bc\5\16\b\2cd\7\31\2\2dg\3\2\2\2eg\7\31\2\2fI\3"+
-		"\2\2\2fJ\3\2\2\2fO\3\2\2\2fS\3\2\2\2fW\3\2\2\2f^\3\2\2\2fb\3\2\2\2fe\3"+
-		"\2\2\2g\r\3\2\2\2hi\7\32\2\2ir\7\b\2\2jo\5\20\t\2kl\7\5\2\2ln\5\20\t\2"+
-		"mk\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2ps\3\2\2\2qo\3\2\2\2rj\3\2\2\2"+
-		"rs\3\2\2\2st\3\2\2\2tu\7\t\2\2u\17\3\2\2\2vw\b\t\1\2w\u0082\5\16\b\2x"+
-		"y\7\22\2\2y\u0082\7\32\2\2z\u0082\5\22\n\2{\u0082\7\35\2\2|\u0082\7\34"+
-		"\2\2}~\7\b\2\2~\177\5\20\t\2\177\u0080\7\t\2\2\u0080\u0082\3\2\2\2\u0081"+
-		"v\3\2\2\2\u0081x\3\2\2\2\u0081z\3\2\2\2\u0081{\3\2\2\2\u0081|\3\2\2\2"+
-		"\u0081}\3\2\2\2\u0082\u008e\3\2\2\2\u0083\u0084\f\b\2\2\u0084\u0085\t"+
-		"\2\2\2\u0085\u008d\5\20\t\t\u0086\u0087\f\7\2\2\u0087\u0088\t\3\2\2\u0088"+
-		"\u008d\5\20\t\b\u0089\u008a\f\3\2\2\u008a\u008b\t\4\2\2\u008b\u008d\5"+
-		"\20\t\4\u008c\u0083\3\2\2\2\u008c\u0086\3\2\2\2\u008c\u0089\3\2\2\2\u008d"+
-		"\u0090\3\2\2\2\u008e\u008c\3\2\2\2\u008e\u008f\3\2\2\2\u008f\21\3\2\2"+
-		"\2\u0090\u008e\3\2\2\2\u0091\u0096\7\32\2\2\u0092\u0093\7\13\2\2\u0093"+
-		"\u0095\7\32\2\2\u0094\u0092\3\2\2\2\u0095\u0098\3\2\2\2\u0096\u0094\3"+
-		"\2\2\2\u0096\u0097\3\2\2\2\u0097\23\3\2\2\2\u0098\u0096\3\2\2\2\21\26"+
-		"\30$\62\65AG\\for\u0081\u008c\u008e\u0096";
+		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u0083\n\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t\u008e\n\t\f\t\16\t\u0091\13\t\3\n\3\n\3"+
+		"\n\7\n\u0096\n\n\f\n\16\n\u0099\13\n\3\n\2\3\20\13\2\4\6\b\n\f\16\20\22"+
+		"\2\5\3\2\23\24\3\2\25\26\3\2\27\30\u00ab\2\26\3\2\2\2\4\34\3\2\2\2\6*"+
+		"\3\2\2\2\b:\3\2\2\2\nG\3\2\2\2\ff\3\2\2\2\16h\3\2\2\2\20\u0082\3\2\2\2"+
+		"\22\u0092\3\2\2\2\24\27\5\6\4\2\25\27\5\f\7\2\26\24\3\2\2\2\26\25\3\2"+
+		"\2\2\27\30\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\32\3\2\2\2\32\33\7\2"+
+		"\2\3\33\3\3\2\2\2\34\35\7\3\2\2\35\36\7\32\2\2\36\37\7\4\2\2\37$\5\b\5"+
+		"\2 !\7\5\2\2!#\5\b\5\2\" \3\2\2\2#&\3\2\2\2$\"\3\2\2\2$%\3\2\2\2%\'\3"+
+		"\2\2\2&$\3\2\2\2\'(\7\6\2\2()\7\31\2\2)\5\3\2\2\2*+\7\7\2\2+,\7\32\2\2"+
+		",\65\7\b\2\2-\62\5\b\5\2./\7\5\2\2/\61\5\b\5\2\60.\3\2\2\2\61\64\3\2\2"+
+		"\2\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65-\3\2\2\2"+
+		"\65\66\3\2\2\2\66\67\3\2\2\2\678\7\t\2\289\5\n\6\29\7\3\2\2\2:;\7\32\2"+
+		"\2;\t\3\2\2\2<=\7\n\2\2=?\7\31\2\2>@\5\f\7\2?>\3\2\2\2@A\3\2\2\2A?\3\2"+
+		"\2\2AB\3\2\2\2BC\3\2\2\2CD\7\13\2\2DE\7\31\2\2EH\3\2\2\2FH\5\f\7\2G<\3"+
+		"\2\2\2GF\3\2\2\2H\13\3\2\2\2Ig\5\4\3\2JK\5\22\n\2KL\7\f\2\2LM\5\20\t\2"+
+		"MN\7\31\2\2Ng\3\2\2\2OP\7\r\2\2PQ\5\20\t\2QR\7\31\2\2Rg\3\2\2\2ST\7\16"+
+		"\2\2TU\5\20\t\2UV\7\31\2\2Vg\3\2\2\2WX\7\17\2\2XY\5\20\t\2Y\\\5\n\6\2"+
+		"Z[\7\20\2\2[]\5\n\6\2\\Z\3\2\2\2\\]\3\2\2\2]g\3\2\2\2^_\7\21\2\2_`\5\20"+
+		"\t\2`a\5\n\6\2ag\3\2\2\2bc\5\16\b\2cd\7\31\2\2dg\3\2\2\2eg\7\31\2\2fI"+
+		"\3\2\2\2fJ\3\2\2\2fO\3\2\2\2fS\3\2\2\2fW\3\2\2\2f^\3\2\2\2fb\3\2\2\2f"+
+		"e\3\2\2\2g\r\3\2\2\2hi\7\32\2\2ir\7\b\2\2jo\5\20\t\2kl\7\5\2\2ln\5\20"+
+		"\t\2mk\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2ps\3\2\2\2qo\3\2\2\2rj\3\2"+
+		"\2\2rs\3\2\2\2st\3\2\2\2tu\7\t\2\2u\17\3\2\2\2vw\b\t\1\2w\u0083\5\16\b"+
+		"\2xy\7\22\2\2y\u0083\7\32\2\2z\u0083\5\22\n\2{|\7\35\2\2|\u0083\b\t\1"+
+		"\2}\u0083\7\34\2\2~\177\7\b\2\2\177\u0080\5\20\t\2\u0080\u0081\7\t\2\2"+
+		"\u0081\u0083\3\2\2\2\u0082v\3\2\2\2\u0082x\3\2\2\2\u0082z\3\2\2\2\u0082"+
+		"{\3\2\2\2\u0082}\3\2\2\2\u0082~\3\2\2\2\u0083\u008f\3\2\2\2\u0084\u0085"+
+		"\f\b\2\2\u0085\u0086\t\2\2\2\u0086\u008e\5\20\t\t\u0087\u0088\f\7\2\2"+
+		"\u0088\u0089\t\3\2\2\u0089\u008e\5\20\t\b\u008a\u008b\f\3\2\2\u008b\u008c"+
+		"\t\4\2\2\u008c\u008e\5\20\t\4\u008d\u0084\3\2\2\2\u008d\u0087\3\2\2\2"+
+		"\u008d\u008a\3\2\2\2\u008e\u0091\3\2\2\2\u008f\u008d\3\2\2\2\u008f\u0090"+
+		"\3\2\2\2\u0090\21\3\2\2\2\u0091\u008f\3\2\2\2\u0092\u0097\7\32\2\2\u0093"+
+		"\u0094\7\13\2\2\u0094\u0096\7\32\2\2\u0095\u0093\3\2\2\2\u0096\u0099\3"+
+		"\2\2\2\u0097\u0095\3\2\2\2\u0097\u0098\3\2\2\2\u0098\23\3\2\2\2\u0099"+
+		"\u0097\3\2\2\2\21\26\30$\62\65AG\\for\u0082\u008d\u008f\u0097";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

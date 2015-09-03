@@ -20,6 +20,7 @@ public class Pie2Assembler extends PieGrammarBaseListener {
 	//------------PROGRAM---------------
 	@Override
 	public void enterProgram(ProgramContext ctx) {
+		System.out.println(ctx.functionDefinition().get(0).getText());
 		//traductor.
 	}
 	

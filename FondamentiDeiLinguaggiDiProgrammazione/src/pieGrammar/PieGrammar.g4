@@ -8,6 +8,13 @@ grammar PieGrammar;
 @header{
   package pieGrammar; 
 }
+@parser::member{
+	private PieTraductor traductor;
+	private PieGrammarParser(TokenStream input, MakeGenerator gen){
+		super(input);
+		traductor=gen;
+	}
+}
 
 
 program
