@@ -3,10 +3,10 @@
  *  Build a convential symbol table while parsing.  Save
  *  symbol ptrs in AST nodes.
  */
-grammar Pie;
+grammar PieGrammar;
 
 @header{
-  package pie.parser; 
+  package pieGrammar; 
 }
 
 

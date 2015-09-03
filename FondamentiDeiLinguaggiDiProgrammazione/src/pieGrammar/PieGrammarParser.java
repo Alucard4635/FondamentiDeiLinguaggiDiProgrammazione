@@ -1,6 +1,6 @@
-// Generated from Pie.g4 by ANTLR 4.4
+// Generated from PieGrammar.g4 by ANTLR 4.4
 
-  package pie.parser; 
+  package pieGrammar; 
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class PieParser extends Parser {
+public class PieGrammarParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -39,7 +39,7 @@ public class PieParser extends Parser {
 	};
 
 	@Override
-	public String getGrammarFileName() { return "Pie.g4"; }
+	public String getGrammarFileName() { return "PieGrammar.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }
@@ -53,12 +53,12 @@ public class PieParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public PieParser(TokenStream input) {
+	public PieGrammarParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgramContext extends ParserRuleContext {
-		public TerminalNode EOF() { return getToken(PieParser.EOF, 0); }
+		public TerminalNode EOF() { return getToken(PieGrammarParser.EOF, 0); }
 		public FunctionDefinitionContext functionDefinition(int i) {
 			return getRuleContext(FunctionDefinitionContext.class,i);
 		}
@@ -77,11 +77,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterProgram(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitProgram(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitProgram(this);
 		}
 	}
 
@@ -138,8 +138,8 @@ public class PieParser extends Parser {
 	}
 
 	public static class StructDefinitionContext extends ParserRuleContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
-		public TerminalNode ID() { return getToken(PieParser.ID, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
+		public TerminalNode ID() { return getToken(PieGrammarParser.ID, 0); }
 		public List<VardefContext> vardef() {
 			return getRuleContexts(VardefContext.class);
 		}
@@ -152,11 +152,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_structDefinition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStructDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStructDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStructDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStructDefinition(this);
 		}
 	}
 
@@ -201,7 +201,7 @@ public class PieParser extends Parser {
 	}
 
 	public static class FunctionDefinitionContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(PieParser.ID, 0); }
+		public TerminalNode ID() { return getToken(PieGrammarParser.ID, 0); }
 		public List<VardefContext> vardef() {
 			return getRuleContexts(VardefContext.class);
 		}
@@ -217,11 +217,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_functionDefinition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterFunctionDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterFunctionDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitFunctionDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitFunctionDefinition(this);
 		}
 	}
 
@@ -273,18 +273,18 @@ public class PieParser extends Parser {
 	}
 
 	public static class VardefContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(PieParser.ID, 0); }
+		public TerminalNode ID() { return getToken(PieGrammarParser.ID, 0); }
 		public VardefContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_vardef; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterVardef(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterVardef(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitVardef(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitVardef(this);
 		}
 	}
 
@@ -309,12 +309,12 @@ public class PieParser extends Parser {
 	}
 
 	public static class BlockContext extends ParserRuleContext {
-		public List<TerminalNode> NL() { return getTokens(PieParser.NL); }
+		public List<TerminalNode> NL() { return getTokens(PieGrammarParser.NL); }
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
 		}
 		public TerminalNode NL(int i) {
-			return getToken(PieParser.NL, i);
+			return getToken(PieGrammarParser.NL, i);
 		}
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
@@ -325,11 +325,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_block; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterBlock(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterBlock(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitBlock(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitBlock(this);
 		}
 	}
 
@@ -401,19 +401,19 @@ public class PieParser extends Parser {
 		}
 	}
 	public static class StatNLContext extends StatementContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
 		public StatNLContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatNL(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatNL(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatNL(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatNL(this);
 		}
 	}
 	public static class StatAssigmentContext extends StatementContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -423,11 +423,11 @@ public class PieParser extends Parser {
 		public StatAssigmentContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatAssigment(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatAssigment(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatAssigment(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatAssigment(this);
 		}
 	}
 	public static class StatIfContext extends StatementContext {
@@ -443,11 +443,11 @@ public class PieParser extends Parser {
 		public StatIfContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatIf(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatIf(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatIf(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatIf(this);
 		}
 	}
 	public static class StaWhileContext extends StatementContext {
@@ -460,41 +460,41 @@ public class PieParser extends Parser {
 		public StaWhileContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStaWhile(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStaWhile(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStaWhile(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStaWhile(this);
 		}
 	}
 	public static class StatFunctionCallContext extends StatementContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
 		public FunctionCallContext functionCall() {
 			return getRuleContext(FunctionCallContext.class,0);
 		}
 		public StatFunctionCallContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatFunctionCall(this);
 		}
 	}
 	public static class StatPrintContext extends StatementContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public StatPrintContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatPrint(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatPrint(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatPrint(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatPrint(this);
 		}
 	}
 	public static class StatStructDefinitionContext extends StatementContext {
@@ -504,26 +504,26 @@ public class PieParser extends Parser {
 		public StatStructDefinitionContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatStructDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatStructDefinition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatStructDefinition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatStructDefinition(this);
 		}
 	}
 	public static class StatReturnContext extends StatementContext {
-		public TerminalNode NL() { return getToken(PieParser.NL, 0); }
+		public TerminalNode NL() { return getToken(PieGrammarParser.NL, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public StatReturnContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterStatReturn(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterStatReturn(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitStatReturn(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitStatReturn(this);
 		}
 	}
 
@@ -624,7 +624,7 @@ public class PieParser extends Parser {
 	}
 
 	public static class FunctionCallContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(PieParser.ID, 0); }
+		public TerminalNode ID() { return getToken(PieGrammarParser.ID, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
@@ -637,11 +637,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_functionCall; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitFunctionCall(this);
 		}
 	}
 
@@ -712,11 +712,11 @@ public class PieParser extends Parser {
 		public ExprConditionContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprCondition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprCondition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprCondition(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprCondition(this);
 		}
 	}
 	public static class ExprFunctionCallContext extends ExprContext {
@@ -726,11 +726,11 @@ public class PieParser extends Parser {
 		public ExprFunctionCallContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprFunctionCall(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprFunctionCall(this);
 		}
 	}
 	public static class ExprMultContext extends ExprContext {
@@ -744,23 +744,23 @@ public class PieParser extends Parser {
 		public ExprMultContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprMult(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprMult(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprMult(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprMult(this);
 		}
 	}
 	public static class ExprStringContext extends ExprContext {
-		public TerminalNode STRING() { return getToken(PieParser.STRING, 0); }
+		public TerminalNode STRING() { return getToken(PieGrammarParser.STRING, 0); }
 		public ExprStringContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprString(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprString(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprString(this);
 		}
 	}
 	public static class ExprParensContext extends ExprContext {
@@ -770,11 +770,11 @@ public class PieParser extends Parser {
 		public ExprParensContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprParens(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprParens(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprParens(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprParens(this);
 		}
 	}
 	public static class ExprFieldContext extends ExprContext {
@@ -784,35 +784,35 @@ public class PieParser extends Parser {
 		public ExprFieldContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprField(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprField(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprField(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprField(this);
 		}
 	}
 	public static class ExprIntContext extends ExprContext {
-		public TerminalNode INT() { return getToken(PieParser.INT, 0); }
+		public TerminalNode INT() { return getToken(PieGrammarParser.INT, 0); }
 		public ExprIntContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprInt(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprInt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprInt(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprInt(this);
 		}
 	}
 	public static class ExprStructCreationContext extends ExprContext {
-		public TerminalNode ID() { return getToken(PieParser.ID, 0); }
+		public TerminalNode ID() { return getToken(PieGrammarParser.ID, 0); }
 		public ExprStructCreationContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprStructCreation(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprStructCreation(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprStructCreation(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprStructCreation(this);
 		}
 	}
 	public static class ExprAddContext extends ExprContext {
@@ -826,11 +826,11 @@ public class PieParser extends Parser {
 		public ExprAddContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterExprAdd(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterExprAdd(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitExprAdd(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitExprAdd(this);
 		}
 	}
 
@@ -985,9 +985,9 @@ public class PieParser extends Parser {
 	}
 
 	public static class FieldContext extends ParserRuleContext {
-		public List<TerminalNode> ID() { return getTokens(PieParser.ID); }
+		public List<TerminalNode> ID() { return getTokens(PieGrammarParser.ID); }
 		public TerminalNode ID(int i) {
-			return getToken(PieParser.ID, i);
+			return getToken(PieGrammarParser.ID, i);
 		}
 		public FieldContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -995,11 +995,11 @@ public class PieParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_field; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).enterField(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).enterField(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PieListener ) ((PieListener)listener).exitField(this);
+			if ( listener instanceof PieGrammarListener ) ((PieGrammarListener)listener).exitField(this);
 		}
 	}
 

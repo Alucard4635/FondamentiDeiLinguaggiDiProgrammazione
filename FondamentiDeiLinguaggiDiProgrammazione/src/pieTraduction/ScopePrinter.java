@@ -3,12 +3,12 @@ package pieTraduction;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
-import pie.parser.PieBaseListener;
-import pie.parser.PieParser.FunctionDefinitionContext;
-import pie.parser.PieParser.ProgramContext;
-import pie.parser.PieParser.StructDefinitionContext;
+import pieGrammar.PieGrammarBaseListener;
+import pieGrammar.PieGrammarParser.FunctionDefinitionContext;
+import pieGrammar.PieGrammarParser.ProgramContext;
+import pieGrammar.PieGrammarParser.StructDefinitionContext;
 
-public class ScopePrinter extends PieBaseListener {
+public class ScopePrinter extends PieGrammarBaseListener {
 
   ParseTreeProperty<Scope> scopes = new ParseTreeProperty<Scope>();
   private String indent = "";

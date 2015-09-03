@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.Token;
 
-import pie.parser.PieParser.BlockContext;
+import pieGrammar.PieGrammarParser.BlockContext;
 
 public class FunctionSymbol extends ScopedSymbol {
 

@@ -1,216 +1,290 @@
 package pieTraduction;
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import pieGrammar.PieBaseListener;
-import pieGrammar.PieParser;
+import pieGrammar.PieGrammarBaseListener;
+import pieGrammar.PieGrammarParser.*;
 
-public class Pie2Assembler extends PieBaseListener {
-	
+
+
+public class Pie2Assembler extends PieGrammarBaseListener {
+	  private GlobalScope globalScope;
+	  private Scope currentScope;
+	  private int numberOfErrors;
+	  // to store associations between a node of the parse-tree
+	  // and its scope
+	  private ParseTreeProperty<Scope> scopes;
+
+	  public Pie2Assembler() {
+	    super();
+	    this.globalScope = new GlobalScope();
+	    this.numberOfErrors = 0;
+	    this.scopes = new ParseTreeProperty<Scope>();
+	  }
+
+	  @Override
+	  public void enterProgram(ProgramContext ctx) {
+	    this.currentScope = globalScope;
+	    scopes.put(ctx, globalScope);
+	  }
+
+	  @Override
+	  public void enterStructDefinition(StructDefinitionContext ctx) {
+	    String structName = ctx.ID().getText();
+	    Symbol sym = currentScope.resolve(structName);
+	    if (sym != null) // struct and function names cannot overlap
+	      reportError(ctx.start, "symbol '" + structName + "' already defined as '" + sym.toString()
+	          + "'");
+	    else {
+	      StructSymbol struct = new StructSymbol(ctx.start, structName, currentScope);
+	      currentScope.define(struct);
+	      currentScope = struct;
+	      scopes.put(ctx, struct);
+	    }
+	  }
+
+	  @Override
+	  public void exitStructDefinition(StructDefinitionContext ctx) {
+	    currentScope = currentScope.getEnclosingScope();
+	  }
+
+	  @Override
+	  public void enterFunctionDefinition(FunctionDefinitionContext ctx) {
+	    String functName = ctx.ID().getText();
+	    Symbol sym = currentScope.resolve(functName);
+	    if (sym != null) // struct and function names cannot overlap
+	      reportError(ctx.start, "symbol '" + functName + " already defined as '" + sym.toString());
+	    else {
+	      FunctionSymbol fun = new FunctionSymbol(ctx.start, functName, currentScope, ctx.block());
+	      currentScope.define(fun);
+	      currentScope = fun;
+	      scopes.put(ctx, fun);
+	    }
+	  }
+
+	  @Override
+	  public void exitFunctionDefinition(FunctionDefinitionContext ctx) {
+	    currentScope = currentScope.getEnclosingScope();
+	  }
+
+	  @Override
+	  public void exitVardef(VardefContext ctx) {
+	    String varName = ctx.ID().getText();
+	    if (currentScope instanceof FunctionSymbol) {
+	      FunctionSymbol fun = (FunctionSymbol) currentScope;
+	      if (fun.checkIfDefinedAsFormalParameter(varName))
+	        reportError(ctx.start, "duplicate argument '" + varName + "' in function '" + fun.getName()
+	            + "' definition");
+	      VariableSymbol var = new VariableSymbol(ctx.start, varName, currentScope);
+	      currentScope.define(var);
+	    }
+	    if (currentScope instanceof StructSymbol) {
+	      StructSymbol struct = (StructSymbol) currentScope;
+	      if (struct.checkIfDefinedAsField(varName))
+	        reportError(ctx.start, "duplicate field '" + varName + "' in struct '" + struct.getName()
+	            + "' definition");
+	      VariableSymbol var = new VariableSymbol(ctx.start, varName, currentScope);
+	      currentScope.define(var);
+	    }
+	  }
+
+	  @Override
+	  public void enterStatReturn(StatReturnContext ctx) {
+	    // check whether return occurs in function
+	    if (!(currentScope instanceof FunctionSymbol))
+	      reportError(ctx.start, "'return' outside function");
+	  }
+
+	  public ParseTreeProperty<Scope> getScopes() {
+	    return scopes;
+	  }
+
+	  private void reportError(Token token, String msg) {
+	    numberOfErrors++;
+	    MessageManager.error(token, msg);
+	    throw new SymbolTableBuilderError();
+	  }
+
+	  public int getNumberOfErrors() {
+	    return numberOfErrors;
+	  }
 //	@Override
-//	public void enterStatNL( PieParser.StatNLContext ctx) {
+//	public void enterStatNL( StatNLContext ctx) {
 //	}
 //
 //	@Override
-//	public void exitStatNL( PieParser.StatNLContext ctx) {
+//	public void exitStatNL( StatNLContext ctx) {
 //	}
 
 	@Override
-	public void enterStatAssigment( PieParser.StatAssigmentContext ctx) {
+	public void enterStatAssigment( StatAssigmentContext ctx) {
 	}
 
 	@Override
-	public void exitStatAssigment( PieParser.StatAssigmentContext ctx) {
+	public void exitStatAssigment( StatAssigmentContext ctx) {
 	}
 
 	@Override
-	public void enterStatIf( PieParser.StatIfContext ctx) {
+	public void enterStatIf( StatIfContext ctx) {
 	}
 
 	@Override
-	public void exitStatIf( PieParser.StatIfContext ctx) {
+	public void exitStatIf( StatIfContext ctx) {
 	}
 
 	@Override
-	public void enterExprMult( PieParser.ExprMultContext ctx) {
+	public void enterExprMult( ExprMultContext ctx) {
 	}
 
 	@Override
-	public void exitExprMult( PieParser.ExprMultContext ctx) {
+	public void exitExprMult( ExprMultContext ctx) {
 	}
 
 	@Override
-	public void enterStaWhile( PieParser.StaWhileContext ctx) {
+	public void enterStaWhile( StaWhileContext ctx) {
 	}
 
 	@Override
-	public void exitStaWhile( PieParser.StaWhileContext ctx) {
+	public void exitStaWhile( StaWhileContext ctx) {
 	}
 
 	@Override
-	public void enterExprString( PieParser.ExprStringContext ctx) {
+	public void enterExprString( ExprStringContext ctx) {
 	}
 
 	@Override
-	public void exitExprString( PieParser.ExprStringContext ctx) {
-	}
-
-	@Override
-	public void enterFunctionDefinition(
-			 PieParser.FunctionDefinitionContext ctx) {
-	}
-
-	@Override
-	public void exitFunctionDefinition(
-			 PieParser.FunctionDefinitionContext ctx) {
+	public void exitExprString( ExprStringContext ctx) {
 	}
 
 	@Override
 	public void enterStatFunctionCall(
-			 PieParser.StatFunctionCallContext ctx) {
+			 StatFunctionCallContext ctx) {
 	}
 
 	@Override
 	public void exitStatFunctionCall(
-			 PieParser.StatFunctionCallContext ctx) {
+			 StatFunctionCallContext ctx) {
 	}
 
 	@Override
-	public void enterExprParens( PieParser.ExprParensContext ctx) {
+	public void enterExprParens( ExprParensContext ctx) {
 	}
 
 	@Override
-	public void exitExprParens( PieParser.ExprParensContext ctx) {
+	public void exitExprParens( ExprParensContext ctx) {
 	}
 
 	@Override
-	public void enterExprField( PieParser.ExprFieldContext ctx) {
+	public void enterExprField( ExprFieldContext ctx) {
 	}
 
 	@Override
-	public void exitExprField( PieParser.ExprFieldContext ctx) {
+	public void exitExprField( ExprFieldContext ctx) {
 	}
 
 	@Override
-	public void enterExprInt( PieParser.ExprIntContext ctx) {
+	public void enterExprInt( ExprIntContext ctx) {
 	}
 
 	@Override
-	public void exitExprInt( PieParser.ExprIntContext ctx) {
+	public void exitExprInt( ExprIntContext ctx) {
 	}
 
 	@Override
-	public void enterProgram( PieParser.ProgramContext ctx) {
-	}
-
-	@Override
-	public void exitProgram( PieParser.ProgramContext ctx) {
+	public void exitProgram( ProgramContext ctx) {
 	}
 
 	@Override
 	public void enterStatStructDefinition(
-			 PieParser.StatStructDefinitionContext ctx) {
+			 StatStructDefinitionContext ctx) {
 	}
 
 	@Override
 	public void exitStatStructDefinition(
-			 PieParser.StatStructDefinitionContext ctx) {
+			 StatStructDefinitionContext ctx) {
 	}
 
 	@Override
 	public void enterExprStructCreation(
-			 PieParser.ExprStructCreationContext ctx) {
+			 ExprStructCreationContext ctx) {
 	}
 
 	@Override
 	public void exitExprStructCreation(
-			 PieParser.ExprStructCreationContext ctx) {
+			 ExprStructCreationContext ctx) {
+	}
+
+
+	@Override
+	public void exitStatReturn( StatReturnContext ctx) {
+	}
+
+
+	@Override
+	public void enterExprCondition( ExprConditionContext ctx) {
 	}
 
 	@Override
-	public void enterStatReturn( PieParser.StatReturnContext ctx) {
-	}
-
-	@Override
-	public void exitStatReturn( PieParser.StatReturnContext ctx) {
-	}
-
-	@Override
-	public void enterStructDefinition(
-			 PieParser.StructDefinitionContext ctx) {
-	}
-
-	@Override
-	public void exitStructDefinition(
-			 PieParser.StructDefinitionContext ctx) {
-	}
-
-	@Override
-	public void enterExprCondition( PieParser.ExprConditionContext ctx) {
-	}
-
-	@Override
-	public void exitExprCondition( PieParser.ExprConditionContext ctx) {
+	public void exitExprCondition( ExprConditionContext ctx) {
 	}
 
 	@Override
 	public void enterExprFunctionCall(
-			 PieParser.ExprFunctionCallContext ctx) {
+			 ExprFunctionCallContext ctx) {
 	}
 
 	@Override
 	public void exitExprFunctionCall(
-			 PieParser.ExprFunctionCallContext ctx) {
+			 ExprFunctionCallContext ctx) {
 	}
 
 	@Override
-	public void enterField( PieParser.FieldContext ctx) {
+	public void enterField( FieldContext ctx) {
 	}
 
 	@Override
-	public void exitField( PieParser.FieldContext ctx) {
+	public void exitField( FieldContext ctx) {
 	}
 
 	@Override
-	public void enterVardef( PieParser.VardefContext ctx) {
+	public void enterVardef( VardefContext ctx) {
+	}
+
+
+	@Override
+	public void enterFunctionCall( FunctionCallContext ctx) {
 	}
 
 	@Override
-	public void exitVardef( PieParser.VardefContext ctx) {
+	public void exitFunctionCall( FunctionCallContext ctx) {
 	}
 
 	@Override
-	public void enterFunctionCall( PieParser.FunctionCallContext ctx) {
+	public void enterBlock( BlockContext ctx) {
 	}
 
 	@Override
-	public void exitFunctionCall( PieParser.FunctionCallContext ctx) {
+	public void exitBlock( BlockContext ctx) {
 	}
 
 	@Override
-	public void enterBlock( PieParser.BlockContext ctx) {
+	public void enterStatPrint( StatPrintContext ctx) {
 	}
 
 	@Override
-	public void exitBlock( PieParser.BlockContext ctx) {
+	public void exitStatPrint( StatPrintContext ctx) {
 	}
 
 	@Override
-	public void enterStatPrint( PieParser.StatPrintContext ctx) {
+	public void enterExprAdd( ExprAddContext ctx) {
 	}
 
 	@Override
-	public void exitStatPrint( PieParser.StatPrintContext ctx) {
-	}
-
-	@Override
-	public void enterExprAdd( PieParser.ExprAddContext ctx) {
-	}
-
-	@Override
-	public void exitExprAdd( PieParser.ExprAddContext ctx) {
+	public void exitExprAdd( ExprAddContext ctx) {
 	}
 
 	@Override
