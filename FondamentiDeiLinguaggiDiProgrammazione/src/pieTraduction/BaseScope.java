@@ -1,4 +1,4 @@
-package pie.symtab;
+package pieTraduction;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

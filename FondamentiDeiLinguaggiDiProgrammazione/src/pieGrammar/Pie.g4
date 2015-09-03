@@ -1,33 +1,39 @@
-
+/** A simple dynamically-typed language that smacks of Python.
+ *  This builds a tree, then we'll interpret it with a tree grammar
+ *  Build a convential symbol table while parsing.  Save
+ *  symbol ptrs in AST nodes.
+ */
 grammar Pie;
 
-@lexer::header {package pieGrammar;}
-@parser::header{package pieGrammar;
-	
-}
-// START: members
-@parser::members {
-//	private PieTranslator translator;
-//	public PieParser(TokenStream input, PieTranslator translator){
-//		super(input);
-//		this.translator=translator;
-//	}
-
+@header{
+  package pie.parser; 
 }
 
 
 program
 	:	( functionDefinition | statement )+ EOF 
 	;
+	
+structDefinition
+    :   'struct' ID '{' vardef (',' vardef)* '}' NL
+    ;
+    
+
 functionDefinition
-	:	'def' ID '(' (vardef (',' vardef)* )? ')' block 
+	:	'def' ID '(' (vardef (',' vardef)* )? ')' block
 	;
+
+vardef
+  : ID
+  ;
+
 
 block
 	:	':' NL statement+ '.' NL	
 	|	statement
 	;
-	
+
+
 statement
 	:	structDefinition                 # StatStructDefinition
 	|	field '=' expr NL	               # StatAssigment
@@ -38,19 +44,6 @@ statement
 	|	functionCall NL                  # StatFunctionCall 
 	|	NL	                               # StatNL
 	;
-	
-structDefinition
-    :   'struct' ID '{' vardef (',' vardef)* '}' NL
-    ;
-    
-
-
-vardef
-  : ID 
-  ;
-
-
-
 
 functionCall
 	:	ID '(' (expr (',' expr )*)? ')'

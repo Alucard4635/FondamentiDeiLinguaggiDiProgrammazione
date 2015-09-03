@@ -1,4 +1,4 @@
-package pie.symtab;
+package pieTraduction;
 
 public class GlobalScope extends BaseScope {
 
