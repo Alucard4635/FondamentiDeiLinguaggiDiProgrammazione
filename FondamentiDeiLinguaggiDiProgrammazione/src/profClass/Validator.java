@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
@@ -41,7 +41,7 @@ public class Validator extends PieGrammarBaseListener {
   @Override
   public void enterStructDefinition(StructDefinitionContext ctx) {
     String structName = ctx.ID().getText();
-    Symbol sym = currentScope.resolve(structName);
+    Symbol sym = currentScope.find(structName);
     if (sym != null) // struct and function names cannot overlap
       reportError(ctx.start, "symbol '" + structName + "' already defined as '" + sym.toString()
           + "'");
@@ -55,13 +55,13 @@ public class Validator extends PieGrammarBaseListener {
 
   @Override
   public void exitStructDefinition(StructDefinitionContext ctx) {
-    currentScope = currentScope.getEnclosingScope();
+    currentScope = currentScope.getParentScope();
   }
 
   @Override
   public void enterFunctionDefinition(FunctionDefinitionContext ctx) {
     String functName = ctx.ID().getText();
-    Symbol sym = currentScope.resolve(functName);
+    Symbol sym = currentScope.find(functName);
     if (sym != null) // struct and function names cannot overlap
       reportError(ctx.start, "symbol '" + functName + " already defined as '" + sym.toString());
     else {
@@ -74,7 +74,7 @@ public class Validator extends PieGrammarBaseListener {
 
   @Override
   public void exitFunctionDefinition(FunctionDefinitionContext ctx) {
-    currentScope = currentScope.getEnclosingScope();
+    currentScope = currentScope.getParentScope();
   }
 
   @Override

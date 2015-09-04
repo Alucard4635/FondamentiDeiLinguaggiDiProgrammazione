@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public interface Scope {
    * 
    * @return the enclosing scope.
    */
-  public Scope getEnclosingScope();
+  public Scope getParentScope();
 
   /**
    * Defines <code>sym</code> in this scope.
@@ -26,7 +26,7 @@ public interface Scope {
   public void define(Symbol sym);
 
   /** Look up name in this scope or in enclosing scope if not here */
-  public Symbol resolve(String name);
+  public Symbol find(String name);
 
   /**
    * Indicate how subclasses store scope members. Allows us to factor out common

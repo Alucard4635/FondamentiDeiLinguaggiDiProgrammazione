@@ -19,7 +19,7 @@ import pieGrammar.PieGrammarParser;
 import pieGrammar.PieGrammarParser.*;
 import pieTraduction.Pie2Assembler;
 import pieTraduction.PieTraductor;
-
+import profClass.Validator;
 import assemblerCompiler.AssemblerException;
 import assemblyInterpreter.InterpreterException;
 
@@ -61,24 +61,7 @@ import assemblyInterpreter.InterpreterException;
 			ParseTree tree = assembler.program();
 			ParseTreeWalker walker = new ParseTreeWalker();
 			
-			Pie2Assembler eval = new Pie2Assembler(new PieTraductor() {
-				@Override
-				public void generateAssemblyProgram() {
-					System.out.println("Start");
-				}
-				
-				@Override
-				public void createAStruct(String text) {
-					System.out.println(text);
-					
-				}
-				
-				@Override
-				public void addAssigment(ParseTree child, ExprContext expr) {
-					System.out.println(child+expr.getText());
-					
-				}
-			});
+			Validator eval = new Validator();
 			walker.walk(eval, tree); // walk parse tree
 			
 		}

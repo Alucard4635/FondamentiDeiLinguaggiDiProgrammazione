@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 import org.antlr.v4.runtime.Token;
 

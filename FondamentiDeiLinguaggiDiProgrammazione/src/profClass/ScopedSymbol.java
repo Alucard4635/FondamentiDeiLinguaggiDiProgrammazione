@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 import org.antlr.v4.runtime.Token;
 
@@ -11,13 +11,13 @@ public abstract class ScopedSymbol extends Symbol implements Scope {
     this.enclosingScope = enclosingScope;
   }
 
-  public Symbol resolve(String name) {
+  public Symbol find(String name) {
     Symbol s = getMembers().get(name);
     if (s != null)
       return s;
     // if not here, check any parent scope
     if (getParentScope() != null) {
-      return getParentScope().resolve(name);
+      return getParentScope().find(name);
     }
     return null; // not found
   }
@@ -28,10 +28,6 @@ public abstract class ScopedSymbol extends Symbol implements Scope {
   }
 
   public Scope getParentScope() {
-    return getEnclosingScope();
-  }
-
-  public Scope getEnclosingScope() {
     return enclosingScope;
   }
 

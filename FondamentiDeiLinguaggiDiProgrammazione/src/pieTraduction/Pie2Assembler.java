@@ -5,221 +5,212 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import pieGrammar.PieGrammarBaseListener;
-import pieGrammar.PieGrammarParser.*;
+import pieGrammar.PieGrammarParser;
 
 public class Pie2Assembler extends PieGrammarBaseListener {
-	private PieTraductor traductor;
 
-	public Pie2Assembler(PieTraductor traductor) {
-		super();
-		this.traductor=traductor;
-	}
-	public Pie2Assembler() {
-		// TODO Auto-generated constructor stub
-	}
-	//------------PROGRAM---------------
 	@Override
-	public void enterProgram(ProgramContext ctx) {
-		System.out.println(ctx.functionDefinition().get(0).getText());
-		//traductor.
-	}
-	
-	@Override
-	public void exitProgram(ProgramContext ctx) {
-		//traductor.generateAssemblyProgram();
+	public void enterProgram(PieGrammarParser.ProgramContext ctx) {
 	}
 
 	@Override
-	public void enterStatAssigment(StatAssigmentContext ctx) {
-		
-	}
-
-	@Override
-	public void exitStatAssigment(StatAssigmentContext ctx) {
-	}
-
-	@Override
-	public void enterStatIf(StatIfContext ctx) {
-	}
-
-	@Override
-	public void exitStatIf(StatIfContext ctx) {
-	}
-
-	@Override
-	public void enterExprMult(ExprMultContext ctx) {
-	}
-
-	@Override
-	public void exitExprMult(ExprMultContext ctx) {
-	}
-
-	@Override
-	public void enterStaWhile(StaWhileContext ctx) {
-	}
-
-	@Override
-	public void exitStaWhile(StaWhileContext ctx) {
-	}
-
-	@Override
-	public void enterExprString(ExprStringContext ctx) {
-	}
-
-	@Override
-	public void exitExprString(ExprStringContext ctx) {
-	}
-
-	@Override
-	public void enterFunctionDefinition(
-			FunctionDefinitionContext ctx) {
-	}
-
-	@Override
-	public void exitFunctionDefinition(
-			FunctionDefinitionContext ctx) {
-	}
-
-	@Override
-	public void enterStatFunctionCall(
-			StatFunctionCallContext ctx) {
-	}
-
-	@Override
-	public void exitStatFunctionCall(
-			StatFunctionCallContext ctx) {
-	}
-
-	@Override
-	public void enterExprParens(ExprParensContext ctx) {
-	}
-
-	@Override
-	public void exitExprParens(ExprParensContext ctx) {
-	}
-
-	@Override
-	public void enterExprField(ExprFieldContext ctx) {
-	}
-
-	@Override
-	public void exitExprField(ExprFieldContext ctx) {
-	}
-
-	@Override
-	public void enterExprInt(ExprIntContext ctx) {
-		//sconst ctx.getText();
-	}
-
-	@Override
-	public void exitExprInt(ExprIntContext ctx) {
-	}
-
-
-	@Override
-	public void enterStatStructDefinition(
-			StatStructDefinitionContext ctx) {
-	}
-
-	@Override
-	public void exitStatStructDefinition(
-			StatStructDefinitionContext ctx) {
-	}
-
-	@Override
-	public void enterExprStructCreation(
-			ExprStructCreationContext ctx) {
-		//traductor.createAStruct(ctx.ID().getText());
-	}
-
-	@Override
-	public void exitExprStructCreation(
-			ExprStructCreationContext ctx) {
-	}
-
-	@Override
-	public void enterStatReturn(StatReturnContext ctx) {
-	}
-
-	@Override
-	public void exitStatReturn(StatReturnContext ctx) {
+	public void exitProgram(PieGrammarParser.ProgramContext ctx) {
 	}
 
 	@Override
 	public void enterStructDefinition(
-			StructDefinitionContext ctx) {
+			PieGrammarParser.StructDefinitionContext ctx) {
 	}
 
 	@Override
 	public void exitStructDefinition(
-			StructDefinitionContext ctx) {
+			PieGrammarParser.StructDefinitionContext ctx) {
 	}
 
 	@Override
-	public void enterExprCondition(ExprConditionContext ctx) {
+	public void enterFunctionDefinition(
+			PieGrammarParser.FunctionDefinitionContext ctx) {
 	}
 
 	@Override
-	public void exitExprCondition(ExprConditionContext ctx) {
+	public void exitFunctionDefinition(
+			PieGrammarParser.FunctionDefinitionContext ctx) {
+	}
+
+	@Override
+	public void enterVardef(PieGrammarParser.VardefContext ctx) {
+	}
+
+	@Override
+	public void exitVardef(PieGrammarParser.VardefContext ctx) {
+	}
+
+	@Override
+	public void enterBlock(PieGrammarParser.BlockContext ctx) {
+	}
+
+	@Override
+	public void exitBlock(PieGrammarParser.BlockContext ctx) {
+	}
+
+	@Override
+	public void enterStatStructDefinition(
+			PieGrammarParser.StatStructDefinitionContext ctx) {
+	}
+
+	@Override
+	public void exitStatStructDefinition(
+			PieGrammarParser.StatStructDefinitionContext ctx) {
+	}
+
+	@Override
+	public void enterStatAssigment(PieGrammarParser.StatAssigmentContext ctx) {
+	}
+
+	@Override
+	public void exitStatAssigment(PieGrammarParser.StatAssigmentContext ctx) {
+	}
+
+	@Override
+	public void enterStatReturn(PieGrammarParser.StatReturnContext ctx) {
+	}
+
+	@Override
+	public void exitStatReturn(PieGrammarParser.StatReturnContext ctx) {
+	}
+
+	@Override
+	public void enterStatPrint(PieGrammarParser.StatPrintContext ctx) {
+	}
+
+	@Override
+	public void exitStatPrint(PieGrammarParser.StatPrintContext ctx) {
+	}
+
+	@Override
+	public void enterStatIf(PieGrammarParser.StatIfContext ctx) {
+	}
+
+	@Override
+	public void exitStatIf(PieGrammarParser.StatIfContext ctx) {
+	}
+
+	@Override
+	public void enterStaWhile(PieGrammarParser.StaWhileContext ctx) {
+	}
+
+	@Override
+	public void exitStaWhile(PieGrammarParser.StaWhileContext ctx) {
+	}
+
+	@Override
+	public void enterStatFunctionCall(
+			PieGrammarParser.StatFunctionCallContext ctx) {
+	}
+
+	@Override
+	public void exitStatFunctionCall(
+			PieGrammarParser.StatFunctionCallContext ctx) {
+	}
+
+	@Override
+	public void enterStatNL(PieGrammarParser.StatNLContext ctx) {
+	}
+
+	@Override
+	public void exitStatNL(PieGrammarParser.StatNLContext ctx) {
+	}
+
+	@Override
+	public void enterFunctionCall(PieGrammarParser.FunctionCallContext ctx) {
+	}
+
+	@Override
+	public void exitFunctionCall(PieGrammarParser.FunctionCallContext ctx) {
+	}
+
+	@Override
+	public void enterExprCondition(PieGrammarParser.ExprConditionContext ctx) {
+	}
+
+	@Override
+	public void exitExprCondition(PieGrammarParser.ExprConditionContext ctx) {
 	}
 
 	@Override
 	public void enterExprFunctionCall(
-			ExprFunctionCallContext ctx) {
+			PieGrammarParser.ExprFunctionCallContext ctx) {
 	}
 
 	@Override
 	public void exitExprFunctionCall(
-			ExprFunctionCallContext ctx) {
+			PieGrammarParser.ExprFunctionCallContext ctx) {
 	}
 
 	@Override
-	public void enterField(FieldContext ctx) {
+	public void enterExprMult(PieGrammarParser.ExprMultContext ctx) {
 	}
 
 	@Override
-	public void exitField(FieldContext ctx) {
+	public void exitExprMult(PieGrammarParser.ExprMultContext ctx) {
 	}
 
 	@Override
-	public void enterVardef(VardefContext ctx) {
+	public void enterExprString(PieGrammarParser.ExprStringContext ctx) {
 	}
 
 	@Override
-	public void exitVardef(VardefContext ctx) {
+	public void exitExprString(PieGrammarParser.ExprStringContext ctx) {
 	}
 
 	@Override
-	public void enterFunctionCall(FunctionCallContext ctx) {
+	public void enterExprParens(PieGrammarParser.ExprParensContext ctx) {
 	}
 
 	@Override
-	public void exitFunctionCall(FunctionCallContext ctx) {
+	public void exitExprParens(PieGrammarParser.ExprParensContext ctx) {
 	}
 
 	@Override
-	public void enterBlock(BlockContext ctx) {
+	public void enterExprField(PieGrammarParser.ExprFieldContext ctx) {
 	}
 
 	@Override
-	public void exitBlock(BlockContext ctx) {
+	public void exitExprField(PieGrammarParser.ExprFieldContext ctx) {
 	}
 
 	@Override
-	public void enterStatPrint(StatPrintContext ctx) {
+	public void enterExprInt(PieGrammarParser.ExprIntContext ctx) {
 	}
 
 	@Override
-	public void exitStatPrint(StatPrintContext ctx) {
+	public void exitExprInt(PieGrammarParser.ExprIntContext ctx) {
 	}
 
 	@Override
-	public void enterExprAdd(ExprAddContext ctx) {
+	public void enterExprStructCreation(
+			PieGrammarParser.ExprStructCreationContext ctx) {
 	}
 
 	@Override
-	public void exitExprAdd(ExprAddContext ctx) {
-		
+	public void exitExprStructCreation(
+			PieGrammarParser.ExprStructCreationContext ctx) {
+	}
+
+	@Override
+	public void enterExprAdd(PieGrammarParser.ExprAddContext ctx) {
+	}
+
+	@Override
+	public void exitExprAdd(PieGrammarParser.ExprAddContext ctx) {
+	}
+
+	@Override
+	public void enterField(PieGrammarParser.FieldContext ctx) {
+	}
+
+	@Override
+	public void exitField(PieGrammarParser.FieldContext ctx) {
 	}
 
 	@Override
@@ -237,13 +228,4 @@ public class Pie2Assembler extends PieGrammarBaseListener {
 	@Override
 	public void visitErrorNode(ErrorNode node) {
 	}
-
 }
-
-//	@Override
-//	public void enterStatNL(StatNLContext ctx) {
-//	}
-//
-//	@Override
-//	public void exitStatNL(StatNLContext ctx) {
-//	}

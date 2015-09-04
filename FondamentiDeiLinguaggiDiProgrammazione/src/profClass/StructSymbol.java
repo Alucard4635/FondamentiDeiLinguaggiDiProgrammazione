@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 import java.util.Map;
 import java.util.LinkedHashMap;

@@ -1,4 +1,4 @@
-package pieTraduction;
+package profClass;
 
 public class GlobalScope extends BaseScope {
 
