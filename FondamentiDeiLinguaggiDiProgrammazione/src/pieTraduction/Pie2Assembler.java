@@ -150,7 +150,9 @@ public class Pie2Assembler extends PieGrammarBaseListener {
 	public void exitExprCondition(ExprConditionContext ctx) {
 		BlockOfCode last = partialCode.get(partialCode.size()-1);
 		if (ctx.op.getText()=="==") {
-			last.addCode("ieq");
+			if (ctx.expr(0).start.getType()==27&&ctx.expr(1).start.getType()==27) {
+				last.addCode("ieq");
+			}
 		}else {
 			last.addCode("igt");
 		}
